@@ -48,9 +48,11 @@ If you are using MacOS X, please try the following:
 This is known to work on Darwin with libtool 1.5.10.
 
 
+
 Installing from development version
 -----------------------------------
 
-There's only one difference to the convenient version: you first need to
+Aside the aforementioned tools you will need LaTeX to build the documentation.
+Otherwise there's only one difference to the convenient version: you first need to
 run autogen.sh to generate the configure file. Since you're a developer,
 you knew this anyway...

@@ -14,4 +14,3 @@ automake -a
 
 ./configure #--with-mathpp=/usr
 
-/bin/sh patch-libtool
