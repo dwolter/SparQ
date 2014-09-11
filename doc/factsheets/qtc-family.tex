@@ -1,0 +1,144 @@
+
+\section{Qualitative Trajectory Calculus Family}\label{sec:qtc}
+\citet{Weghe04_PhD} developed a family of trajectory calculi on the basis of relative trajectories of two moving objects.
+He investigates representation where he combined subsets of the three different features:
+change in distance, change to the side, and relative velocity.
+He also investigated differences in representations based on one dimensional (1D) and two dimensional (2D) entities.
+The most basic calculus is $QTC_{B11}$ dealing with change in distance in 1D,
+enhanced with velocity in $QTC_{B12}$.
+The extensions to 2D entities is given in $QTC_{B21}$ and $QTC_{B22}$.
+$QTC_{C21}$ ($QTC_{C22}$) extends $QTC_{B21}$ ($QTC_{B22})$ by relative velocity.
+
+
+\subsection*{QTC in 1D With Distance}\label{sec:qtc-b11}
+\kasten{
+\subsubsection*{Qualitative Trajectory Calculus in 1D (QTC-B11)}
+\begin{calcfeatures}
+\feature{calculus identifier}{qtc-b11}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{interval (1D trajectory positions at two different time points)}
+\feature{description}{describes the relative orientation between two trajectory segments}
+\feature{base relations\footnotemark}{++, +-, +O, -+, - -, -O, O+, O-, OO}
+\feature{references}{\citet{Weghe04_PhD}}
+\lastfeature{remarks}{no qualifier is available for this calculus yet}
+\end{calcfeatures}
+}
+\footnotetext{For avoiding the necessity to quote every single relation
+such that leading zeros are not ignored we realized the implementation with O's
+instead of zeros.}
+
+$QTC_{B11}$ represents the relative distance change of two moving objects $A$ and $B$ at
+timepoints $t_i$ and $t_{i+1}$ .
+Intuitively, the first character denotes whether $A$ moves towards the starting position of $B$ ($-$), moves away ($+$, or the distance stays the same ($O$).
+With $dist(x,y)$ denoting the distance between two positions
+and $A_i$ denotes the position of object $A$ at time point $t_i$
+moving towards means $dist(A_{i+1}, B_{i})<dist(A_{i}, B_{i})$,
+moving away means $dist(A_{i+1}, B_{i})>dist(A_{i}, B_{i})$,
+and equidistant means $dist(A_{i+1}, B_{i})=dist(A_{i}, B_{i})$
+The second character represents the change in distance regarding $B$ wrt. $A$.
+This results in nine base relations.
+
+
+\subsection*{QTC in 1D With Distance and Velocity}\label{sec:qtc-b12}
+\kasten{
+\subsubsection*{Qualitative Trajectory Calculus in 1D with velocity (QTC-B12)}
+\begin{calcfeatures}
+\feature{calculus identifier}{qtc-b12}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{-}
+\feature{description}{describes the relative orientation between two trajectory segments}
+\feature{base relations}{+++, ++-, ++O, +-+, +- -, +-O, +O+, -++, -+-, -+O, - -+, - - -, - -O, -O+, O+-, O- -, OOO}
+\feature{references}{\citet{Weghe04_PhD}}
+\lastfeature{remarks}{no qualifier is available for this calculus yet}
+\end{calcfeatures}
+}
+
+The first two characters of $QTC_{B12}$ represent the same as $QTC_{B11}$.
+The third character represents the relative velocitiy between $A$ and $B$,
+i.e.~whether object $A$ is slower than $B$ ($-$), is faster ($+$), or both have the same velocity ($O$). Because the conditions of the three characters interfere in 1D
+only 17 out of 27 potential relations are feasible.
+
+
+\subsection*{QTC in 2D With Distance}\label{sec:qtc-b21}
+\kasten{
+\subsubsection*{Qualitative Trajectory Calculus in 2D (QTC-B21)}
+\begin{calcfeatures}
+\feature{calculus identifier}{qtc-b21}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{dipole (2D trajectory positions at two different time points)}
+\feature{description}{describes the relative orientation between two trajectory segments}
+\feature{base relations}{++, +-, +O, -+, - -, -O, O+, O-, OO}
+\feature{references}{\citet{Weghe04_PhD}}
+\lastfeature{remarks}{no qualifier is available for this calculus yet}
+\end{calcfeatures}
+}
+
+$QTC_{B21}$ is similar to $QTC_{B11}$ except dealing with trajectories in 2D instead of only 1D.
+
+
+\subsection*{QTC in 2D With Distance and Velocity}\label{sec:qtc-b22}
+\kasten{
+\subsubsection*{Qualitative Trajectory Calculus in 2D with velocity (QTC-B22)}
+\begin{calcfeatures}
+\feature{calculus identifier}{qtc-b22}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{-}
+\feature{description}{describes the relative orientation between two trajectory segments}
+\feature{base relations}{ $\{+,O,-\}\times\{+,O,-\}\times\{+,O,-\}$}
+\feature{references}{\citet{Weghe04_PhD}}
+\lastfeature{remarks}{no qualifier is available for this calculus yet}
+\end{calcfeatures}
+}
+
+$QTC_{B22}$ is similar to $QTC_{B12}$ except dealing with trajectories in 2D instead of only 1D.
+In contrast to $QTC_{B12}$ in 2D all 27 potential relations are feasible.
+
+
+
+\subsection*{QTC in 2D With Distance and Side}\label{sec:qtc-c21}
+\kasten{
+\subsubsection*{Qualitative Trajectory Calculus in 2D (QTC-C21)}
+\begin{calcfeatures}
+\feature{calculus identifier}{qtc-c21}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{dipole (2D trajectory positions at two different time points)}
+\feature{description}{describes the relative orientation between two trajectory segments}
+\feature{base relations}{$\{+,O,-\}\times\{+,O,-\}\times\{+,O,-\}\times\{+,O,-\}$}
+\feature{references}{\citet{Weghe04_PhD}}
+\lastfeature{remarks}{no qualifier is available for this calculus yet}
+\end{calcfeatures}
+}
+
+$QTC_{C21}$ relations are given by a four character tuple.
+The first two characters represent the same as a $QTC_{B21}$ relation.
+The third character denotes whether $A$ moves to the left ($-$), to the right ($+$),
+or on the reference line ($O$) spanned between $A$ and $B$ at $t_i$.
+The fourth character represents the change of $B$ wrt. to this reference line.
+This results in $3^4=81$ base relations.
+
+
+\subsection*{QTC in 2D With Distance, Side, and Velocity}\label{sec:qtc-c22}
+\kasten{
+\subsubsection*{Qualitative Trajectory Calculus in 2D with velocity (QTC-C22)}
+\begin{calcfeatures}
+\feature{calculus identifier}{qtc-c22}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{-}
+\feature{description}{describes the relative orientation between two trajectory segments}
+\feature{base relations}{$\{+,O,-\}\times\{+,O,-\}\times\{+,O,-\}\times\{+,O,-\}\times\{+,O,-\}$}
+\feature{references}{\citet{Weghe04_PhD}}
+\lastfeature{remarks}{no qualifier is available for this calculus yet}
+\end{calcfeatures}
+}
+
+$QTC_{C22}$ relations are given by a five character tuple.
+The first four directly map onto $QTC_{C21}$ relations.
+The fifth character represents the relative velocity between objects $A$ and $B$.
+$-$ denotes $A$ being slower than $B$ , $+$ is faster, and $O$ if both move at the same speed.
+

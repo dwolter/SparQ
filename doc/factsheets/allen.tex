@@ -1,0 +1,66 @@
+\section{Allen's Interval Algebra (IA)}\label{sec:allen}
+
+\kasten{
+\subsubsection*{Allen's Interval Algebra overview}
+\begin{calcfeatures}
+\feature{calculus identifier}{allen, aia, ia}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{intervals (defined by a start and end-point) on a unidirectional time line}
+\feature{description}{describes the mereotopological relation between two intervals}
+\feature{base relations}{b (before), bi (before inverse), m (meets), mi (meets inverse), o (overlaps), oi (overlaps inverse), s (starts), si (starts inverse), d (during), di (during inverse), f (finishes), fi (finishes inverse), eq (equals)}
+\lastfeature{references}{\citet{allen83}}
+\end{calcfeatures}
+}
+
+Allen's interval algebra (IA) \citep{allen83} relates pairs of time intervals.
+Time interval $x$ is represented as a tuple of a starting point $x_s$ and
+end point $x_e$ with $x_s<x_e$ using real numbers, e.g., {\tt (life-of-Bach 1685 1750)}.
+% (cf. Tab.~\ref{fig:allen}):
+%\textbf{b}efore, \textbf{m}eets, \textbf{o}verlaps, \textbf{s}tarts, \textbf{d}uring, \textbf{f}inishes, \textbf{b}efore  \textbf{i}nverse, \textbf{m}eets \textbf{i}nverse, \textbf{o}verlaps \textbf{i}nverse, \textbf{s}tarts \textbf{i}nverse, \textbf{d}uring \textbf{i}nverse, \textbf{f}inishes \textbf{i}nverse, \textbf{eq}uals.
+Altogether 13 base relations are distinguished by comparing the start
+and end points of the intervals.
+%.~\ref{fig:allen}).
+%The converse operation always takes an interval relation $r$ to the corresponding inverse relation, e.g.\ f to fi.
+
+%\begin{table}
+\begin{center}
+\begin{tabular}{|ll@{\hspace{12mm}}c@{\hspace{12mm}}l|}
+\hline
+{\bf relation} & {\bf term} & {\bf example} & {\bf definition} \\ \hline
+{\tt b}  & $x$ before $y$ & xxx~~~~~~~~~& $x_{e}<y_{s}$\\
+{\tt bi} & $y$ after $x$    & ~~~~~~~~~yyy& \\ \hline
+{\tt m} & $x$ meets $y$  & xxxx~~~~~~~& $x_{e}=y_{s}$\\
+{\tt mi}& $y$ met-by $x$& ~~~~~~~yyyy& \\ \hline
+{\tt o} & $x$ overlaps $y$& xxxxx~~~& $x_{s}<y_{s}<x_{e}\wedge$\\
+{\tt oi} & $y$ overlapped-by $x$ & ~~~yyyyy& $x_{e}<y_{e}$\\ \hline
+{\tt d} & $x$ during $y$& xxx& $x_{s}>y_{s}\wedge$\\
+{\tt di} & $y$ includes $x$ & yyyyyyy& $x_{e}<y_{e}$\\ \hline
+{\tt s} & $x$ starts $y$ & xxx\hfill~& $x_{s}=y_{s}\wedge$\\
+{\tt si} & $y$ started-by $x$ & yyyyyyy\hfill~& $x_{e}<y_{e}$\\ \hline
+{\tt f} & $x$ finishes $y$ & \hfill xxx& $x_{e}=y_{e}\wedge$\\
+{\tt fi} & $y$ finished-by $x$ & \hfill yyyyyyy& $x_{s}>y_{s}$\\ \hline
+{\tt eq} & $x$ equals $y$ & xxxxxxx& $x_{s}=y_{s}\wedge$\\
+ &  & yyyyyyy& $x_{e}=y_{e}$\\ \hline
+\end{tabular}
+%\caption{The 13 basic Allen relations.}
+%\label{fig:allen}
+\end{center}
+%\end{table}
+
+%\cmdline{./sparq qualify allen all "((life-of-bach 1685 1750) (life-of-telemann 1681 1767))"\\ ((LIFE-OF-BACH d LIFE-OF-TELEMANN) )}
+
+% \paragraph*{This part is copied 1:1 from the web ... sounds reasonable, but is a part like this necessary?}
+% In order to represent indefinite information, Allen
+% allows for any subset (disjunction) of the basic relations
+% to hold between two time intervals. A set
+% of temporally related events forms a network, with
+% edges corresponding to (possibly disjunctive) relations
+% between events. van Beek (1991) refers to
+% such networks as IA (Interval Algebra) networks.
+% There are two fundamental queries one can ask of
+% IA networks:
+% 1. Finding feasible relations between all pairs of
+% events, and
+% 2. Determining the consistency of temporal relations.
+% For IA networks, answering such queries was shown to be an NP-complete problem (Vilain et al., 1989). Therefore, van Beek (1991) proposed a restricted class of IA networks, called SIA (Simple Interval Algebra) networks. This class restricts the disjunctive relations between the time intervals just to those that can be expressed as conjunctions of equalities and inequalities between the interval endpoints. van Beek (1991) argues that the restricted class still covers most of the practical cases, while at the same time he gives a tractable polynomial time algorithms for answering the fundamental queries of the SIA networks.

@@ -1,0 +1,47 @@
+
+\section{The Geometric Orientation (Alignment) Calculus}\label{sec:geomoricalc}
+
+\kasten{
+\subsubsection*{The Geometric Orientation (Alignment) Calculus overview}
+\begin{calcfeatures}
+\feature{calculus identifier}{geomori, ori, align}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{dipole}
+\feature{description}{describes the alignment of two oriented line segments}
+% \feature{base relations}{\textbf{P}arallel, \textbf{+}, \textbf{-}, \textbf{O}pposite-parallel}
+\feature{base relations}{$P$, $+$, $O$, $-$}
+% \feature{references}{\citet{cosy:dylla:2004:qsnhinsitcalc_b}}
+\feature{references}{\cite{cosy:dylla:2008:AgCtrlPerspOnQSR}, \cite{Dylla10_CombinedCalculus}}
+\lastfeature{remarks}{no qualifier is available for this calculus yet;\\ conceptually equivalent to Binary Cycord (see Appendix \ref{sec:cycord-binary})}
+\end{calcfeatures}
+}
+
+The Geometric Orientation Calculus, also called Geometric Alignment Calculus,
+relates the alignment of two oriented line segments.
+The alignment is derived by shifting both points of the second dipole
+such that the starting points of dipole $A$ and $B$ coincide.
+Dipole $B$ may point
+in the same direction as $A$ (parallel),
+in opposite direction as $A$ (opposite-parallel),
+somewhere to the left of dipole $A$ (mathematically positive),
+or somewhere to the right of dipole $A$ (mathematically negative).
+An example with two dipoles which are aligned positively
+is depicted in Figure \ref{fig:AlignCalc_Positive}.
+The alignment of dipoles is part of the development of
+the fine grained Dipole Relation Algebra with paralellism
+in \citep{cosy:dylla:2004:qsnhinsitcalc_b}.
+
+
+\begin{figure}[htb]
+\begin{center}
+%\addtolength{\abovedisplayshortskip}{-10pt}
+%\addtolength{\abovedisplayskip}{-10pt}
+\addtolength{\abovecaptionskip}{-15pt}
+%\includegraphics[width=0.3\columnwidth]{pics/Dipole_Basic}
+\scalebox{0.8}{\input{figures/DRAfp_rlll+_Example.pdf_t}}
+\caption{Example of two dipoles which are aligned positively.}
+\label{fig:AlignCalc_Positive}
+\end{center}
+\end{figure}
+

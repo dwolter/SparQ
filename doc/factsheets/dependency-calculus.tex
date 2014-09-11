@@ -1,0 +1,30 @@
+\section{Dependency Calculus}\label{sec:depcalc}
+%
+\kasten{
+\subsubsection*{Dependency Calculus overview}
+\begin{calcfeatures}
+\feature{calculus identifier}{depcalc, dep}
+\feature{calculus parameters}{none}
+\feature{arity}{binary}
+\feature{entity type}{-}
+\feature{description}{describes the order between nodes in a network}
+\feature{base relations}{$<$, $=$, $>$, \^{}, $\sim$}
+\feature{references}{\citet{Ragni05_DepCalc}, \citet{Ragni05_DepCalc_short}}
+\lastfeature{remarks}{no qualifier is available for this calculus yet}
+\end{calcfeatures}
+}
+
+
+The Dependency Calculus (DC) represents pairs of points regarding their
+dependencies in a partial ordered structure.
+Therefore, it meets all requirements to describe dependencies in networks.
+If $x$, $y$ are points in a partial order $\langle T,\leq\rangle$
+the base relations are defined as follows \citep{Ragni05_DepCalc}:
+\begin{eqnarray*}
+x < y & \text{iff} & x \leq y \text{ and not } y \leq x.\\
+x = y & \text{iff} & x \leq y \text{ and } y \leq x.\\
+x > y & \text{iff} & y \leq x \text{ and not } x \leq y.\\
+x \text{ \^{} } y & \text{iff} & \exists z\; z \leq y \wedge z \leq x \text{ and neither } x \leq y \text{ nor } y \leq x.\\
+x \sim y & \text{iff} & \text{ neither } \exists z\;z\leq y \wedge z \leq x \text{ nor } x\leq y \text{ nor } y\leq x .
+\end{eqnarray*}
+

@@ -1,0 +1,23 @@
+\begin{picture}(0,0)%
+\includegraphics{DRAfp_rlll+_Example.pdf}%
+\end{picture}%
+\setlength{\unitlength}{4144sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(2274,2724)(-11,-1873)
+\put(1306,-1366){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,1,0}$s_A$}%
+}}}}
+\put(1711,-646){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$s_B$}%
+}}}}
+\put(1216, 29){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$e_B$}%
+}}}}
+\put(1306,-601){\makebox(0,0)[lb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,1,0}$e_A$}%
+}}}}
+\put(631,-691){\makebox(0,0)[rb]{\smash{{\SetFigFont{20}{24.0}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{.53,.81,1}$e_B'$}%
+}}}}
+\end{picture}%
