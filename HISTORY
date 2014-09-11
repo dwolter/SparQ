@@ -1,0 +1,38 @@
+CHANGELOG
+
+0.8
+---
+* completely new command dispatcher based on parametric type system
+* lots of new functionality and new calculi
+* new plugin mechanism: see Lib/extension.lisp
+
+
+0.7.5
+-----
+* bug fixes, general improvements
+
+0.7.4
+-----
+* improved algebraic reasoning module
+* improved support of 64Bit systems
+
+0.7
+---
+* Major change: calculi-dependent automatic recompiling during runtime to increase speed (-> up to 1000x speed up :-)
+* Major change: calculi-dependent relation representation
+* More precomputation when compiling calculi
+* Improved the general heuristics in a-closure (only slightly, I'm afraid...)
+* Improved heuristics in backtracking search (scenario consistency)
+* Introduced algebraic specification
+
+
+0.6.2
+-----
+* Fixed compilation problems with picky C++ compilers.
+
+
+0.6
+---
+* Started this history ;-)
+* New calculi
+* Refining/ merging constraint networks
