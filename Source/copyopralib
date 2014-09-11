@@ -1,0 +1,48 @@
+# This file is part of SparQ, a toolbox for qualitative spatial reasoning.
+# Copyright (C) 2006, 2007 SFB/TR 8 Spatial Cognition, Project R3-[Q-Shape]
+# See http://www.sfbtr8.spatial-cognition.de/project/r3/sparq/
+
+# SparQ is free software and has been released under the terms of the GNU
+# General Public License version 3 or later. You should have received a
+# copy of the GNU General Public License along with this program. If not,
+# see <http://www.gnu.org/licenses/>.
+
+OPRADIR=../Lib/Source/opra/.libs
+DIPOLEDIR=../Lib/Source/dipole/.libs
+DCCDIR=../Lib/Source/dcc/.libs
+DCC2DIR=../Lib/Source/dcc2/.libs
+SCCDIR=../Lib/Source/scc/.libs
+TPCCDIR=../Lib/Source/tpcc/.libs
+QTCDIR=../Lib/Source/qtc/.libs
+
+BINDIR=../Lib/bin
+
+OPRAFILE=`egrep "\<library_names" $OPRADIR/liboprac.lai \
+	|awk '{print $1}' | sed "s/library_names='//"`
+
+DIPOLEFILE=`egrep "\<library_names" $DIPOLEDIR/libdipole.lai \
+	|awk '{print $1}' | sed "s/library_names='//"`
+
+DCCFILE=`egrep "\<library_names" $DCCDIR/libdcc.lai \
+	|awk '{print $1}' | sed "s/library_names='//"`
+
+DCC2FILE=`egrep "\<library_names" $DCC2DIR/libdcc2.lai \
+	|awk '{print $1}' | sed "s/library_names='//"`
+
+SCCFILE=`egrep "\<library_names" $SCCDIR/libscc.lai \
+	|awk '{print $1}' | sed "s/library_names='//"`
+
+TPCCFILE=`egrep "\<library_names" $TPCCDIR/libtpcc.lai \
+	|awk '{print $1}' | sed "s/library_names='//"`
+
+QTCFILE=`egrep "\<library_names" $QTCDIR/libqtcc.lai \
+	|awk '{print $1}' | sed "s/library_names='//"`
+
+cp $OPRADIR/$OPRAFILE $BINDIR/liboprac.dylib
+cp $DIPOLEDIR/$DIPOLEFILE $BINDIR/libdipole.dylib
+cp $DCCDIR/$DCCFILE $BINDIR/libdcc.dylib
+cp $DCC2DIR/$DCC2FILE $BINDIR/libdcc2.dylib
+cp $SCCDIR/$SCCFILE $BINDIR/libscc.dylib
+cp $TPCCDIR/$TPCCFILE $BINDIR/libtpcc.dylib
+cp $QTCDIR/$QTCFILE $BINDIR/libqtc.dylib
+
