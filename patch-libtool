@@ -1,0 +1,6 @@
+#!/bin/sh
+# Patches the created libtool script to work with MacOsX.
+
+cp libtool libtool.tmp
+cat libtool.tmp| sed "s/-all_load \\\\\\$\convenience//"  > libtool
+rm libtool.tmp
