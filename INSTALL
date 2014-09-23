@@ -32,23 +32,6 @@ Further instructions can be found in the SparQ Manual. If you encounter
 any problems during the build process, please contact the authors. 
 
 
-Installing SparQ on MacOS X 
----------------------------
-
-Some of the portings of GNU libtool to MacOS X are buggy. 
-SparQ, however, relies on libtool to build dynamic libraries.
-
-If you are using MacOS X, please try the following:
-
- 1. Run './configure' as usual
- 2. Run './patch-libtool' (this implies only local modifications
-    and does not change anything on your system).
- 3. Run 'make'
-
-This is known to work on Darwin with libtool 1.5.10.
-
-
-
 Installing from development version
 -----------------------------------
 
