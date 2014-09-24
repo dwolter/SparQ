@@ -3,6 +3,7 @@
 *.lisp-temp
 *.aux
 *.log
+.DS_Store
 Lib/Makefile
 Lib/Makefile.in
 Lib/Source/.DS_Store
