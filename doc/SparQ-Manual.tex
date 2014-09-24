@@ -163,7 +163,10 @@ frame=single
 \date{\today}
 
 
+\newcommand{\changefont}[3]{
+\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
 
+\setkomafont{sectioning}{\changefont{cm}{bx}{n}}
 
 
 \begin{document}
@@ -173,7 +176,22 @@ frame=single
 %	\item Algebraische Spezifikiation und Quantifizierung beschreiben
 %\end{itemize}}}\end{center}
 
-\maketitle
+\begin{titlepage}
+\begin{center}
+{\huge \bfseries{\engine\ User Manual V0.8\\}}
+\bigskip
+{\LARGE September 2014\\ \bigskip
+Diedrich Wolter\\ Jan Oliver Wallgr{\"u}n \\ Frank Dylla\\ Lutz Frommberger\\
+}
+\end{center}
+\vfill
+\begin{tabular}{llll}
+\multicolumn{2}{l}{Further contributions by:}\\[1ex]
+Dominik L\"ucke & Thomas Schneider &  & \\
+\end{tabular}
+\vfill
+\end{titlepage}
+%\maketitle
 \tableofcontents
 
 
@@ -182,10 +200,11 @@ frame=single
 
 \engine{} is a toolbox for representing space and reasoning about
 space based on  qualitative spatial relations. Its development started
-within the \qshape{}
-project of the \sfbsc{} funded by the Deutsche Forschungsgemeinschaft (DFG).
-\engine{} is based on results from the qualitative spatial reasoning (QSR)
-community which consists of researchers from a various disciplines
+within the \qshape{} project of the Spatial Cognition Research Center in Bremen, Germany in 2006.
+Financial support by the the Deutsche Forschungsgemeinschaft (DFG)  is gratefully acknowledge.
+By now, contributors have moved on and so has \engine{}.
+
+\engine{} disseminates results from the qualitative spatial and temporal reasoning community which consists of researchers from a various disciplines
 including computer science, artificial intelligence, geography, philosophy,
 psychology, and linguistics.
 So far, a multitude of formal calculi over sets of
@@ -198,24 +217,25 @@ calculi and the developed reasoning techniques available in a single
 homogeneous framework that is released under the GPL license for freely available software and can easily be included into applications.
 Our aim is providing a common toolbox spanning across all techniques of qualitative reasoning, thereby providing a universal toolbox to the user. Currently, we provide techniques for
 \begin{itemize}
-	\item mapping the continuos domain to qualitative representations
+	\item specifying qualitative formalisms and analyzing them
+	\item interfacing the continuos domain with qualitative representations
 	\item manipulating symbolical propositions
-	\item checking consistency of qualitative information
+	\item reasoning with symbolical propositions, in particular checking consistency of qualitative information
 	\item interfacing with other reasoning tools
 \end{itemize}
 
 \engine{} is designed for the application designer or researcher working in a field other than qualitative reasoning, offering access to reasoning techniques in an easy-to-use manner. If you  are new to qualitative spatial reasoning, see the following chapter for an introduction to this field and the services it can offer to your field.
 
-SparQ is also designed for the researcher working on qualitative spatial reasoning. It provides an implementation toolbox of key techniques in QSR, making experimental analysis easier. Furthermore, SparQ offers an easy format to specify new calculi. This eases distribution of new calculi and enables researches to more easily compare different calculi, for example in an application context. In this manner SparQ is a community effort: it provides a rich repertoire of qualitative calculi to application designers. We would be happy to include your calculus! Last but not least, SparQ offers tools for analyzing QSR calculi, thereby supporting the calculus designer.
+SparQ is also designed for the researcher working on qualitative spatial and temporal reasoning (QSR). It provides an implementation toolbox of key techniques in QSR, making experimental analysis easier. Furthermore, SparQ offers an easy format to specify new calculi. This eases distribution of new calculi and enables researches to more easily compare different calculi, for example in an application context. In this manner SparQ is a community effort: it provides a rich repertoire of qualitative calculi to application designers. We would be happy to include your calculus! Last but not least, SparQ offers tools for analyzing QSR calculi, thereby supporting the calculus designer.
 
 
 This document provides answers to four topic areas:
 \begin{itemize}
-	\item Installation of SparQ
-	\item A brief introduction to the field of QSR
-	\item Reference of SparQ commands and calculi specification syntax
+	\item installation of SparQ
+	\item brief introduction to the field of QSR
+	\item reference of SparQ commands and calculi specification syntax
 % (TBD!)	\item Detailed implementation notes and an outlook on planned extensions 
-	\item Brief description of provided calculi 
+	\item brief description of provided calculi 
 \end{itemize}
 
 %Section \ref{sec:qsr} offers a small introduction to qualitative spatial calculi and qualitative spatial reasoning in general and introduces the relevant terms required for working with \engine{}.
@@ -227,11 +247,11 @@ This document provides answers to four topic areas:
 %supported calculi and the newest version of this manual, please visit our
 %website (\url{http://www.sfbtr8.uni-bremen.de/project/r3/sparq/}).
 %Up to now, we focus on calculi for reasoning about the positions of points or line segments, but we hope to include more calculi in the future.
-For questions or feedback, please send us an e-mail to the address below. We are always interested in suggestions for improvement and in hearing about your experience with \engine{}.
+For questions or feedback, please get in contact with us an e-mail to the address below. We are always interested in suggestions for improvement and in hearing about your experience with \engine{}.
 
 \vspace{0.5cm}
 \noindent
-The \qshape{} team
+The \engine{} team
 
 \noindent
 \url{qshape@sfbtr8.uni-bremen.de}
@@ -286,7 +306,7 @@ any Unix system.
 	\item Steel Bank Common Lisp
           (SBCL)\footnote{\url{http://sbcl.sourceforge.net/}}, version~0.9.10 or higher
 	\item gcc and g++, version 2.95 or higher
-    \item GNU libtool, version 1.4.3 or higher\footnote{On Mac\,Os\,X a
+    \item GNU libtool, version 1.4.3 or higher\footnote{On Mac\,OS\,X a
             newer libtool version may be required, otherwise a manual patch may be
             necessary. See INSTALL notes for details.}
 	\item \LaTeX{} for typesetting this manual
@@ -1210,10 +1230,6 @@ Overview of commands operating on constraints:
 \section{Algebraic reasoning}\label{sec:a-reasoning}
 \engine{} includes a module for reasoning about real-valued domain using techniques of algebraic geometry. Spatial reasoning problems get posed as algebraic problems of solving systems of equations. The techniques implemented in \engine{} are based on Gr\"obner bases (see e.g., \cite{cox:98}). The main service offered by the algebraic reasoning module is to provide a consistency checking mechanism for constraint networsk that is based on the relation semantics only. This means, algebraic reasoning can be used to compute or to verify operation tables such as e.g., used for specifying the composition operation. Furthermore, algebraic reasoning can be used to analyze certain calculi properties.
 
-\medskip
-\centerline{\framebox{\parbox{0.85\textwidth}{%
-{\bf Note:} The algebraic reasoning module is a under current development. We point out that it may currently not be as effective as desirable.
-}}}
 \medskip
 
 \subsection{Consistency checking}
