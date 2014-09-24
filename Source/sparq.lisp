@@ -111,7 +111,7 @@
 ;; A constant that is not equal to anything but itself allows distinguishing parsing nil and failing to parse
 (define-constant +nothing+ (gensym))
 
-(define-constant +sparq-version-name+ "V0.7.5")
+(define-constant +sparq-version-name+ "V0.8")
 
 (define-constant +built-info+ (multiple-value-bind (sec min std day mon year) (get-decoded-time)
 				(format nil "~a (~a) on ~a-~2,'0d-~2,'0d ~a:~2,'0d.~2,'0d" (lisp-implementation-type) (machine-type) year mon day std min sec)))
