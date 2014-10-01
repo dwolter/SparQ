@@ -1298,8 +1298,9 @@
 		    (cons :FAIL (format nil "Error: Calculus ~a does not match with specialization ~a" (calculus-name *calculus*) (caar extra-spec))))
 		*calculus*)
 	    (cons :FAIL "No calculus loaded"))
+	;; calculus specifier either corresponds to calculus nickname or path/filename
 	(let ((cfile (locate-calculus (format nil "~a" specifier))))
-	  (multiple-value-bind (dummy error) (progn (let ((err (catch 'error (prog1 nil
+	  (multiple-value-bind (dummy error) (ignore-errors (let ((err (catch 'error (prog1 nil
 									       (let ((cvalue (gethash cfile cache)))
 										 (if cvalue
 										     (setq *calculus* cvalue)
