@@ -38,6 +38,7 @@ TPCCFILE=`egrep "\<library_names" $TPCCDIR/libtpcc.lai \
 QTCFILE=`egrep "\<library_names" $QTCDIR/libqtcc.lai \
 	|awk '{print $1}' | sed "s/library_names='//"`
 
+mkdir -p $BINDIR
 cp $OPRADIR/$OPRAFILE $BINDIR/liboprac.dylib
 cp $DIPOLEDIR/$DIPOLEFILE $BINDIR/libdipole.dylib
 cp $DCCDIR/$DCCFILE $BINDIR/libdcc.dylib
