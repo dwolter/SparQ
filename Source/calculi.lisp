@@ -1194,7 +1194,9 @@
 		   ;; write temporary calculus definition...
 					;(when (probe-file source-file) ;; Weired, but :supersede won't do...
 					;  (delete-file source-file))
-		   (with-open-file (out source-file :direction :output :if-exists :supersede)		   
+		   (with-open-file (out source-file :direction :output :if-exists :supersede)
+		     (format out "(eval-when (:load-toplevel) (progn ~{(calculi::open-calculus-library ~w) ~}))"
+			     ',(remove-duplicates external-libs :test #'string=))
 		     (format out "(cl-user::def-calculus ~w~% :arity ~w~%:parametric? nil~%:basis-entity ~w~%:identity-relation ~w~%:base-relations ~w~%" ',name ',arity ',basis-entity ',identity-relation ',base-relations)
 		     ,@(let (code)
 			    (when converse-spec? (push `(format out ":converse-operation ~w~%" ',converse-operation) code))
