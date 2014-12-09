@@ -902,7 +902,7 @@
   (make-instance 'silent-value :value ()))
 
 
-(defcommand ("a-reasoning" (c calculus) "compute-operation" (operation (member converse composition cl-user::composition cl-user::converse cl-user::shortcut cl-user::homing cl-user::inverse cl-user::n-ary-composition)))
+(defcommand ("a-reasoning" (c calculus) "compute-operation" (operation (member cl-user::composition cl-user::converse cl-user::shortcut cl-user::homing cl-user::inverse cl-user::n-ary-composition)))
     (let ((table (analyze-operation *sparq-io* c operation))
 	  (relrep (calculi:calculus-relation-representation c)))
       (cond
