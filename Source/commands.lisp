@@ -67,6 +67,9 @@
 (defmethod value ((sv silent-value))
   (silent-value sv))
 
+(defmethod parse-primitive ((type (eql 'filename)) expression &rest dummy)
+  (symbol-name expression))
+
 ;; catch-all parser for all Lisp builtin types
 (defmethod parse-primitive (type expr &rest stuff)
   (sparq:debug-out 9 "trying to parse type '~w' with exp '~w'" type expr)
