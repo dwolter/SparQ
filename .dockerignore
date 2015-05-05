@@ -1,0 +1,9 @@
+.dockerignore
+.git
+.gitignore
+COPYING
+CREDITS
+Dockerfile
+HISTORY
+INSTALL
+README.md
