@@ -43,14 +43,15 @@ and start up in seconds.
 
 After setting up docker, pull the SparQ repository with
 
-  docker pull hendrikcech/sparq:latest
+  docker pull dwolter/sparq:latest
 
-Replace 'latest' with a version tag to pull a specific release. A list is available
-at the docker hub: https://registry.hub.docker.com/u/hendrikcech/sparq/tags/manage/
+'latest' is a tag that is automatically kept up-to-date with the git master branch.
+Replace it with a version tag to pull a specific release. A list is available
+at the docker hub: https://registry.hub.docker.com/u/dwolter/sparq/tags/manage/
 
 SparQ can now be started by running
 
-  docker run -ti --rm hendrikcech/sparq
+  docker run -ti --rm dwolter/sparq
 
 Installing from development version
 -----------------------------------
