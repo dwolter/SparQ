@@ -33,16 +33,14 @@
 ;;                 callable from its code such we can implement make-load-form
 
 #+SBCL (require 'SB-BSD-SOCKETS)
-;(require :sb-sprof)
+#+SPARQDEVEL (require :sb-sprof)
 
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-#|
-  (declaim (sb-ext:muffle-conditions sb-ext:compiler-note))  <<--- should be switched on/off for release/non-release builds
-  (declaim (sb-ext:muffle-conditions sb-ext:code-deletion-note))
-|#
+  #-SPARQDEVEL (declaim (sb-ext:muffle-conditions sb-ext:compiler-note))
+  #-SPARQDEVEL (declaim (sb-ext:muffle-conditions sb-ext:code-deletion-note))
   (setf *READ-DEFAULT-FLOAT-FORMAT* 'DOUBLE-FLOAT)
-)
+  )
 
 (defpackage :sparq
   (:use :common-lisp)
@@ -319,7 +317,14 @@
     `(lambda ,(lambda-args call)
        ,call)))
 
+;;
+;; measuring compute time utilities
+;;
+;; within a with-timing body, calls to report-time are time-stamped and, at exit of with-timing
+;; a report is printed. Used with "-t" command line option
+
 (defvar *times* nil)
+
 (declaim (inline report-time))
 (defun report-time (tag)
   (declare (optimize (speed 3) (safety 0)))
