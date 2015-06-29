@@ -84,7 +84,7 @@
   `(aif2 (match ',pat ,seq)
          (let ,(mapcar #'(lambda (v)
                            `(,v (binding ',v it)))
-                       (vars-in then #'atom))
+                       (vars-in pat #'atom)) ; was: (vars-in then #'atom) which is truly weired... accidental change maybe?
            ,then)
          ,else))
 
