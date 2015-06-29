@@ -141,7 +141,7 @@
 
 (defpattern "sum of terms whose coeficients have same sign and even exponent" ((?coefficient-1 ?monom-1) . ?rest-terms)
   (if (and (null ?monom-1)
-           (null ?rest-term)
+           (null ?rest-terms)
            (/= ?coefficient-1 0))
     (reply  :applicable? t
             :non-fullfillable? t)
@@ -167,3 +167,4 @@
 		   :non-fullfillable? nil
 		   :new-bindings necessary-bindings
 		   :alternatives alternative-bindings)))))))
+
