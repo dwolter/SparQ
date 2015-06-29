@@ -413,5 +413,3 @@
   (merge-configurations #'(lambda (r1 r2) r2)
 			c cn cn2))
 
-
-(export '(:refine-configurations :extend-configurations))
