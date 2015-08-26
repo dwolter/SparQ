@@ -118,7 +118,8 @@
 			  (EQ EQ EQ)
 			  )
 
-  :tractable-subsets (((N) (NW) (W) (SW) (S) (SE) (E) (NE) (EQ) (N NW W SW S SE E NE EQ))) ;; THIS IS NOT A REAL TRACTABLE SUBSET
+  ;; THIS IS NOT A GOOD TRACTABLE SUBSET: TRACTABLE BUT NOT MAXIMAL
+  :tractable-subsets ((() (e) (eq) (n) (ne) (nw) (n ne nw) (s) (eq n s) (se) (e ne se) (sw) (s se sw) (w) (e eq w) (nw sw w) (e eq n ne nw s se sw w))) 
 
   :cnhs ( ((default def 8neighbor 8nb)
 	   ( (N  (EQ NE NW))
