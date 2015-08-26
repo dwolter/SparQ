@@ -227,16 +227,25 @@ const char* qtc_c22_composition(const char* foo, const char* rel_ab_name , const
                 else{ // v={-,0,+}
                     cres[iCres++]='-';
                     cres[iCres++]=' ';
-                    cres[iCres++]=cres[iCres-6];
-                    cres[iCres++]=cres[iCres-6];
-                    cres[iCres++]=cres[iCres-6];
-                    cres[iCres++]=cres[iCres-6];
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
                     cres[iCres++]='O';
-                    cres[iCres++]=cres[iCres-6];
-                    cres[iCres++]=cres[iCres-6];
-                    cres[iCres++]=cres[iCres-6];
-                    cres[iCres++]=cres[iCres-6];
-                    cres[iCres++]=cres[iCres-6];
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
+                    cres[iCres]=cres[iCres-6];
+                    iCres++;
                     cres[iCres++]='+';
                     cres[iCres++]=' ';
                 }
@@ -353,7 +362,7 @@ const char* qtc_c21_composition(const char* foo, const char* rel_ab_name , const
 const char* qtc_c21_converse(const char* foo, const char* rel_name)
 {
     //printf( "INPUT C21 CONVERSE: %s\n", rel_name);
-    sprintf( cres, "%c%c%c%c\0", rel_name[1], rel_name[0], rel_name[3], rel_name[2]);
+    sprintf( cres, "%c%c%c%c", rel_name[1], rel_name[0], rel_name[3], rel_name[2]);
     return cres;
 }
 
@@ -418,7 +427,7 @@ const char* qtc_b21_composition(const char* foo, const char* rel_ab_name , const
  ******************************************************************************/
 const char* qtc_b21_converse(const char* foo, const char* rel_name){
     //printf( "INPUT B21 CONVERSE: %s\n", rel_name);
-    sprintf( cres, "%c%c\0", rel_name[1], rel_name[0]);
+    sprintf( cres, "%c%c", rel_name[1], rel_name[0]);
     //printf( "RESULT CONVERSE: %s", result.c_str() );
     
     return cres;
@@ -469,12 +478,17 @@ const char* qtc_b22_composition(const char* foo, const char* rel_ab_name , const
 				else{ // v={-,0,+}
 					cres[iCres++]='-';
 					cres[iCres++]=' ';
-					cres[iCres++]=cres[iCres-4];
-					cres[iCres++]=cres[iCres-4];
+					cres[iCres]=cres[iCres-4];
+                    iCres++;
+					cres[iCres]=cres[iCres-4];
+                    iCres++;
 					cres[iCres++]='O';
-					cres[iCres++]=cres[iCres-4];
-					cres[iCres++]=cres[iCres-4];
-					cres[iCres++]=cres[iCres-4];
+					cres[iCres]=cres[iCres-4];
+                    iCres++;
+					cres[iCres]=cres[iCres-4];
+                    iCres++;
+					cres[iCres]=cres[iCres-4];
+                    iCres++;
 					cres[iCres++]='+';
 					cres[iCres++]=' ';
 				}
@@ -499,7 +513,7 @@ const char* qtc_b22_converse(const char* foo, const char* rel_name){
     //printf( "INPUT B22 CONVERSE: %s\n", rel_name);
     char v =   qtc_general_velocity_converse( rel_name[2]);
     if( v=='0' ){ v='O'; } // Workaround for 0/O problem
-    sprintf( cres, "%c%c%c\0", rel_name[1], rel_name[0],v);
+    sprintf( cres, "%c%c%c", rel_name[1], rel_name[0],v);
     //printf( "CRES CONVERSE: %s (%c)\n", cres, v);
     return cres;
 }
