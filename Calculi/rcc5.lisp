@@ -29,7 +29,7 @@
 			  (po eq    po)
 			  (po dr    (dr po ppi ))
 			  (po po    (eq dr po pp ppi ))
-			  (po pp    (po pp ))
+			  (po pp    (po pp dr))
 			  (po ppi   (dr po ppi ))
  
 			  (pp eq    pp )
