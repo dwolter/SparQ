@@ -861,15 +861,17 @@
     "tests a property in context of a qualitative calculus"
     (let* ((exp  (read-from-string (format nil "~a" expression)))
 	   (prop (car (last exp)))
+	   (malus ())
 	   (bindings (butlast exp)))
       ;; a little bit of syntax checking
       (unless (every #'(lambda (r)
+			 (setq malus r)
 			 (and (consp r) 
 			      (= (length r) 3) 
 			      (member (third r) '(cl-user::baserel cl-user::rel))
 			      (member (first r) '(cl-user::exists cl-user::forall))))
 		     bindings)
-	(signal-error "malformed variable qualification"))
+	(signal-error "malformed variable qualification in '~a', not in the form (exists|forall <var> baserel|rel)" malus))
 
       (multiple-value-bind (ok info) (test-prop c bindings prop)
 	(if info
