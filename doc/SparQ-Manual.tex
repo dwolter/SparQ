@@ -20,8 +20,9 @@
 \usepackage{fancybox}
 \usepackage{pifont}
 \usepackage[round,comma]{natbib}
+\usepackage{moreverb,MnSymbol}
+\usepackage{listings}
 \usepackage{hyperref}
-\usepackage{moreverb,listings,MnSymbol}
 
 %%% Kommandos... fuer Bildpositionierung?
 \renewcommand{\textfraction}{0.15}
@@ -61,17 +62,17 @@
 \setlength{\rest}{\kastenbreite}\addtolength{\rest}{-1\einrueck}
 \addtolength{\rest}{-1mm} % Der rechte Rand beim Kasten ist mir zu klein...
 \newenvironment{calcfeatures}{\begin{tabbing}\hspace*{\einrueck}\= \\[-1ex]}{\vspace*{-1cm}$ $\end{tabbing}}
-\newcommand{\feature}[2]{{\bfseries{\sffamily{#1}}}\>\parbox[t]{\rest}{\sf #2}\\[1.5ex]}
-\newcommand{\lastfeature}[2]{{\bfseries{\sffamily{#1}}}\>\parbox[t]{\rest}{\sf #2}}
+\newcommand{\feature}[2]{{\bfseries{\sffamily{#1}}}\>\parbox[t]{\rest}{\sffamily #2}\\[1.5ex]}
+\newcommand{\lastfeature}[2]{{\bfseries{\sffamily{#1}}}\>\parbox[t]{\rest}{\sffamily #2}}
 
 \newlength{\shellbreite}
 \setlength{\shellbreite}{\textwidth}
 \addtolength{\shellbreite}{-5mm}
 \definecolor{hellgrau}{gray}{0.85}
-\newcommand{\shellThree}[3]{\medskip\noindent\centerline{\colorbox{hellgrau}{\parbox{\shellbreite}{\medskip\small \tt \$ #1\\ "#2"\\ > #3\medskip}}}\medskip}
-\newcommand{\shell}[2]{\medskip\noindent\centerline{\colorbox{hellgrau}{\parbox{\shellbreite}{\medskip\small \tt \$ #1\\ > #2\medskip}}}\medskip}
-\newcommand{\cmdline}[1]{\medskip\noindent\centerline{\colorbox{hellgrau}{\parbox{\shellbreite}{\medskip\small \tt \$ #1\medskip}}}\medskip}
-\newcommand{\outp}[1]{\medskip\noindent\centerline{\colorbox{hellgrau}{\parbox{\shellbreite}{\medskip\small \tt #1\medskip}}}\medskip}
+\newcommand{\shellThree}[3]{\medskip\noindent\centerline{\colorbox{hellgrau}{\parbox{\shellbreite}{\medskip\small \texttt \$ #1\\ "#2"\\ > #3\medskip}}}\medskip}
+\newcommand{\shell}[2]{\medskip\noindent\centerline{\colorbox{hellgrau}{\parbox{\shellbreite}{\medskip\small \texttt \$ #1\\ > #2\medskip}}}\medskip}
+\newcommand{\cmdline}[1]{\medskip\noindent\centerline{\colorbox{hellgrau}{\parbox{\shellbreite}{\medskip\small \texttt \$ #1\medskip}}}\medskip}
+\newcommand{\outp}[1]{\medskip\noindent\centerline{\colorbox{hellgrau}{\parbox{\shellbreite}{\medskip\small \texttt #1\medskip}}}\medskip}
 
 
 \newcommand{\ul}{\hspace*{-0.1em}\rule{0.65em}{1pt}}
@@ -139,14 +140,14 @@
 
 
 
-%\lstset{language=LISP,basicstyle=\footnotesize\tt,stepnumber=5,
+%\lstset{language=LISP,basicstyle=\footnotesize\texttt,stepnumber=5,
 %  numbers=left,numberstyle=\tiny,showstringspaces=false,float=htp,captionpos=b,
 %  emptylines=0
 %}
 \lstset{ %
 language=Lisp,
 numbers=none,
-basicstyle=\footnotesize\tt,
+basicstyle=\footnotesize\ttfamily,
 showstringspaces=false,
 breaklines=true,
 breakatwhitespace=true,
@@ -180,7 +181,7 @@ frame=single
 \begin{center}
 {\huge \bfseries{\engine\ User Manual V0.8\\}}
 \bigskip
-{\LARGE September 2014\\ \bigskip
+{\LARGE 
 Diedrich Wolter\\ Jan Oliver Wallgr{\"u}n \\ Frank Dylla\\ Lutz Frommberger\\
 }
 \end{center}
@@ -556,10 +557,10 @@ can be defined independent of the calculus at hand. The following table lists th
 their corresponding \engine{} operation names ($R$ and $S$ stand for general relations):
 
 \begin{tabular}{|l|l|l|}\hline
-{\bf operation} & {\bf \engine{} names} & {\bf definition} \\ \hline \hline
-union & {\tt union} & $R \cup S = \{\; x\; |\; x \in R \vee x \in S\;\}$\\
-intersection & {\tt intersection, isec} & $R \cap S = \{\; x\; |\; x \in R \wedge x \in S\;\}$\\
-complement & {\tt complement, cmpl}&  $\overline{R} = U \setminus R = \{\; x\; |\; x \in U \wedge x \not\in R\; \}$\\ \hline
+{\bfseries operation} & {\bfseries \engine{} names} & {\bfseries definition} \\ \hline \hline
+union & \texttt{ union} & $R \cup S = \{\; x\; |\; x \in R \vee x \in S\;\}$\\
+intersection & \texttt{ intersection, isec} & $R \cap S = \{\; x\; |\; x \in R \wedge x \in S\;\}$\\
+complement & \texttt{ complement, cmpl}&  $\overline{R} = U \setminus R = \{\; x\; |\; x \in U \wedge x \not\in R\; \}$\\ \hline
 \end{tabular}
 
 
@@ -575,18 +576,18 @@ Obviously, there are more ways to change perspectives in a general $n$-ary calcu
 
 \begin{center}
 \begin{tabular}{|lll@{ $\leadsto$ }l|} \hline
-{\bf operation} & {\bf \engine{} names} & \multicolumn{2}{l|}{{\bf effect}}\\ \hline \hline
+{\bfseries operation} & {\bfseries \engine{} names} & \multicolumn{2}{l|}{{\bfseries effect}}\\ \hline \hline
 %
-\multicolumn{4}{|l|}{\bf binary calculi:}\\
-converse & {\tt converse, cnv} & $A\, r B$ & $B\, r^{\smile} A$\\[1ex] \hline
+\multicolumn{4}{|l|}{\bfseries binary calculi:}\\
+converse & \texttt{ converse, cnv} & $A\, r B$ & $B\, r^{\smile} A$\\[1ex] \hline
 %
-\multicolumn{4}{|l|}{\bf ternary calculi:}\\
+\multicolumn{4}{|l|}{\bfseries ternary calculi:}\\
 %
-inverse & {\tt inv, inverse} & A,B\, r  C & B,A\, inv(r) C\\
-shortcut & {\tt sc, shortcut} & A,B\, r  C & A,C\, sc(r) B\\
-shortcut inverse & {\tt sci, shortcuti} & A,B\, r  C & C,A\, sci(r) B\\
-homing & {\tt hm, homing} & A,B\, r C & B,C\, hm(r) A\\
-homing inverse & {\tt hmi, homingi} & A,B\, r  C & C,B\, hmi(r) A\\ \hline
+inverse & \texttt{ inv, inverse} & A,B\, r  C & B,A\, inv(r) C\\
+shortcut & \texttt{ sc, shortcut} & A,B\, r  C & A,C\, sc(r) B\\
+shortcut inverse & \texttt{ sci, shortcuti} & A,B\, r  C & C,A\, sci(r) B\\
+homing & \texttt{ hm, homing} & A,B\, r C & B,C\, hm(r) A\\
+homing inverse & \texttt{ hmi, homingi} & A,B\, r  C & C,B\, hmi(r) A\\ \hline
 \end{tabular}
 \end{center}
 %\item[Inverse:] $\mbox{INV}(R) = \{\; (y,x,z)\; |\; (x,y,z) \in R\; \}$
@@ -793,14 +794,14 @@ The general syntax for using \engine{}  is
 
 \cmdline{./sparq <module> <calculus> <module specific parameters>}
 
-where {\tt module} designates the particular module to use, {\tt calculus} refers to the qualitative calculus to use, and the remainder of the command line give command specific arguments which will be explained in the following. \engine{} can also be used in interactive mode (see section \ref{sec:interactive}) --- the general syntax is the same though.
+where \texttt{ module} designates the particular module to use, \texttt{ calculus} refers to the qualitative calculus to use, and the remainder of the command line give command specific arguments which will be explained in the following. \engine{} can also be used in interactive mode (see section \ref{sec:interactive}) --- the general syntax is the same though.
 
 
 \noindent Example:
 
 \cmdline{./sparq compute-relation rcc-8 composition dc ntpp}
 
-computes the composition of the rcc-8 relations $DC$ and $NTPP$. \engine{} prints the result {\tt (dc ec po tpp ntpp)} to the shell which stands for $\{DC, EC, PO, TPP, NTPP\}$.
+computes the composition of the rcc-8 relations $DC$ and $NTPP$. \engine{} prints the result \texttt{ (dc ec po tpp ntpp)} to the shell which stands for $\{DC, EC, PO, TPP, NTPP\}$.
 
 %where `compute-relation' is the name of the module to be utilized, in this
 %case the module for conducting operations on relations, `dra-24' is the
@@ -833,16 +834,16 @@ We will take a closer look at each of these three modules in the next sections.
 
 Implemented switches:
 \begin{description}
-	\item[{\tt -v}] verbose mode primarily used for debugging purposes
-	\item[{\tt -i, --interactive}] interactive mode (see section \ref{sec:interactive})
-	\item[{\tt -p <port>, --port}] in interactive mode listen for connection on TCP/IP port rather using input from the shell
+	\item[\texttt{ -v}] verbose mode primarily used for debugging purposes
+	\item[\texttt{ -i, --interactive}] interactive mode (see section \ref{sec:interactive})
+	\item[\texttt{ -p <port>, --port}] in interactive mode listen for connection on TCP/IP port rather using input from the shell
 \end{description}
 
 
 \section{General Syntax}\label{sec:syntax}
 
 \engine{} is case-insensitive, so the notation {\em leftOf} and {\em Leftof} denote the same identifier. When printing, \engine{} uses small letters for relations and capital letters for objects.
-There are some characters that must not be used in specifiers for either relations or objects, in particular parentheses ({\tt (},{\tt )}), punctuation ({\tt .}, {\tt ,}, {\tt ;}, {\tt :}), and {\tt \#} are not allowed. Nearly all other character sequences may be used---if in doubt, refer to the ANSI Common Lisp standard on symbols or just try out.
+There are some characters that must not be used in specifiers for either relations or objects, in particular parentheses (\texttt{ (},\texttt{ )}), punctuation (\texttt{ .}, \texttt{ ,}, \texttt{ ;}, \texttt{ :}), and \texttt{ \#} are not allowed. Nearly all other character sequences may be used---if in doubt, refer to the ANSI Common Lisp standard on symbols or just try out.
 
 
 \subsection{Calculi Identifier}
@@ -854,29 +855,29 @@ Calculi may have specific parameters, for example the granularity parameter in \
 \renewcommand{\arraystretch}{1.5}
 \begin{center}
 \begin{longtable}{|p{4cm}p{6cm}ll|}\hline
-	{\bf calculus identifier(s)} & {\bf calculus} & {\bf section} & {\bf page}\\ \hline \hline
+	{\bfseries calculus identifier(s)} & {\bfseries calculus} & {\bfseries section} & {\bfseries page}\\ \hline \hline
 %
-	{\tt allen, aia, ia} & Allen's interval algebra \citep{allen83} & \ref{sec:allen} & \pageref{sec:allen} \\
-	{\tt block-algebra, ba} & 2D block-algebra \citep{guesgen:89} & \ref{sec:block-algebra} & \pageref{sec:block-algebra} \\
-	{\tt cardir} & Cardinal direction calculus \citep{ligozat98_carddir}  & \ref{sec:carddir} & \pageref{sec:carddir} \\
-	{\tt depcalc, dep} & Dependency calculus \citep{Ragni05_DepCalc} & \ref{sec:depcalc} & \pageref{sec:depcalc} \\
-	{\tt dipole-coarse, dra-24} & Dipole calculus \citep{moratz-renz-wolter-ECAI:00} & \ref{sec:dipole-coarse} & \pageref{sec:dipole-coarse} \\
-	{\tt double-cross, dcc} & Double cross calculus \citep{cosyfre92} using the original tuple naming scheme & \ref{sec:double-cross} & \pageref{sec:double-cross} \\
-	{\tt alternative-double- cross, adcc} & Double cross calculus \citep{cosyfre92} using the alternative single number naming scheme & \ref{sec:double-cross} & \pageref{sec:double-cross} \\
-	{\tt flipflop, ffc, ff} & FlipFlop calculus \citep{Ligozat93_FlipFlopCalculus}& \ref{sec:flip-flop} & \pageref{sec:flip-flop} \\
-	{\tt geomori, ori, align} & Geometric Orientation calculus & \ref{sec:geomoricalc} & \pageref{sec:geomoricalc} \\
-	{\tt point-calculus, pc, point-algebra, pa} & Point algebra \citep{vilain_kautz_beek_89_constraint} & \ref{sec:pointcalc} & \pageref{sec:pointcalc} \\
-	{\tt rcc-5} & Region connection calculus (RCC-5) \citep{randell92_rccb} & \ref{sec:rcc5} & \pageref{sec:rcc5} \\
-	{\tt rcc-8} & Region connection calculus (RCC-8) \citep{randell92_rccb} & \ref{sec:rcc8} & \pageref{sec:rcc8} \\
-	{\tt reldistcalculus} & Exemplary calculus from this manual & \ref{sec:calculus-spec} & \pageref{sec:calculus-spec}\\
-	{\tt single-cross, scc} & Single cross calculus \citep{cosyfre92} & \ref{sec:single-cross} & \pageref{sec:single-cross} \\
-	{\tt opra-} & Oriented point reasoning algebra (\opra{})\citep{moratz06_opra} & \ref{sec:opra} & \pageref{sec:opra}\\
-	{\tt qtc-b11} & Qualitative trajectory calculus in 1D with distance \citep{Weghe04_PhD} & \ref{sec:qtc-b11} & \pageref{sec:qtc-b11}\\
-	{\tt qtc-b12} & Qualitative trajectory calculus in 1D with velocity \citep{Weghe04_PhD} & \ref{sec:qtc-b12} & \pageref{sec:qtc-b12}\\
-	{\tt qtc-b21} & Qualitative trajectory calculus in 2D with distance \citep{Weghe04_PhD} & \ref{sec:qtc-b21} & \pageref{sec:qtc-b21}\\
-	{\tt qtc-b22} & Qualitative trajectory calculus in 2D with distance and velocity \citep{Weghe04_PhD} & \ref{sec:qtc-b22} & \pageref{sec:qtc-b22}\\
-	{\tt qtc-c21} & Qualitative trajectory calculus in 2D with distance and side \citep{Weghe04_PhD} & \ref{sec:qtc-c21} & \pageref{sec:qtc-c21}\\
-	{\tt qtc-c22} & Qualitative trajectory calculus in 2D with distance, side, and velocity \citep{Weghe04_PhD} & \ref{sec:qtc-c22} & \pageref{sec:qtc-c22}\\
+	\texttt{ allen, aia, ia} & Allen's interval algebra \citep{allen83} & \ref{sec:allen} & \pageref{sec:allen} \\
+	\texttt{ block-algebra, ba} & 2D block-algebra \citep{guesgen:89} & \ref{sec:block-algebra} & \pageref{sec:block-algebra} \\
+	\texttt{ cardir} & Cardinal direction calculus \citep{ligozat98_carddir}  & \ref{sec:carddir} & \pageref{sec:carddir} \\
+	\texttt{ depcalc, dep} & Dependency calculus \citep{Ragni05_DepCalc} & \ref{sec:depcalc} & \pageref{sec:depcalc} \\
+	\texttt{ dipole-coarse, dra-24} & Dipole calculus \citep{moratz-renz-wolter-ECAI:00} & \ref{sec:dipole-coarse} & \pageref{sec:dipole-coarse} \\
+	\texttt{ double-cross, dcc} & Double cross calculus \citep{cosyfre92} using the original tuple naming scheme & \ref{sec:double-cross} & \pageref{sec:double-cross} \\
+	\texttt{ alternative-double- cross, adcc} & Double cross calculus \citep{cosyfre92} using the alternative single number naming scheme & \ref{sec:double-cross} & \pageref{sec:double-cross} \\
+	\texttt{ flipflop, ffc, ff} & FlipFlop calculus \citep{Ligozat93_FlipFlopCalculus}& \ref{sec:flip-flop} & \pageref{sec:flip-flop} \\
+	\texttt{ geomori, ori, align} & Geometric Orientation calculus & \ref{sec:geomoricalc} & \pageref{sec:geomoricalc} \\
+	\texttt{ point-calculus, pc, point-algebra, pa} & Point algebra \citep{vilain_kautz_beek_89_constraint} & \ref{sec:pointcalc} & \pageref{sec:pointcalc} \\
+	\texttt{ rcc-5} & Region connection calculus (RCC-5) \citep{randell92_rccb} & \ref{sec:rcc5} & \pageref{sec:rcc5} \\
+	\texttt{ rcc-8} & Region connection calculus (RCC-8) \citep{randell92_rccb} & \ref{sec:rcc8} & \pageref{sec:rcc8} \\
+	\texttt{ reldistcalculus} & Exemplary calculus from this manual & \ref{sec:calculus-spec} & \pageref{sec:calculus-spec}\\
+	\texttt{ single-cross, scc} & Single cross calculus \citep{cosyfre92} & \ref{sec:single-cross} & \pageref{sec:single-cross} \\
+	\texttt{ opra-} & Oriented point reasoning algebra (\opra{})\citep{moratz06_opra} & \ref{sec:opra} & \pageref{sec:opra}\\
+	\texttt{ qtc-b11} & Qualitative trajectory calculus in 1D with distance \citep{Weghe04_PhD} & \ref{sec:qtc-b11} & \pageref{sec:qtc-b11}\\
+	\texttt{ qtc-b12} & Qualitative trajectory calculus in 1D with velocity \citep{Weghe04_PhD} & \ref{sec:qtc-b12} & \pageref{sec:qtc-b12}\\
+	\texttt{ qtc-b21} & Qualitative trajectory calculus in 2D with distance \citep{Weghe04_PhD} & \ref{sec:qtc-b21} & \pageref{sec:qtc-b21}\\
+	\texttt{ qtc-b22} & Qualitative trajectory calculus in 2D with distance and velocity \citep{Weghe04_PhD} & \ref{sec:qtc-b22} & \pageref{sec:qtc-b22}\\
+	\texttt{ qtc-c21} & Qualitative trajectory calculus in 2D with distance and side \citep{Weghe04_PhD} & \ref{sec:qtc-c21} & \pageref{sec:qtc-c21}\\
+	\texttt{ qtc-c22} & Qualitative trajectory calculus in 2D with distance, side, and velocity \citep{Weghe04_PhD} & \ref{sec:qtc-c22} & \pageref{sec:qtc-c22}\\
 	\hline
 \end{longtable}
 \end{center}
@@ -884,7 +885,7 @@ Calculi may have specific parameters, for example the granularity parameter in \
 
 
 \subsection{Denoting Relations}
-Relations are denoted using their name, as a disjunction using {\tt (}, {\tt )}, or by wild cards \verb=*= and \verb=?=.
+Relations are denoted using their name, as a disjunction using \texttt{ (}, \texttt{ )}, or by wild cards \verb=*= and \verb=?=.
 
 \noindent Example using the RCC-8 calculus:\\
 \begin{itemize}
@@ -939,18 +940,18 @@ situation would be:
 \end{verbatim}
 \end{small}
 
-\noindent {\bf Note:} Coordinates may be specified as either integers (2; -3; ...), floats (3.2234; -1e-07), or rational numbers (13/7; -4/2). Using rational numbers can help avoiding effects of rounding errors. Depending on the basis entity (i.e., the domain of the qualitative calculus), different values need to be supplied. This table gives an overview:
+\noindent {\bfseries Note:} Coordinates may be specified as either integers (2; -3; ...), floats (3.2234; -1e-07), or rational numbers (13/7; -4/2). Using rational numbers can help avoiding effects of rounding errors. Depending on the basis entity (i.e., the domain of the qualitative calculus), different values need to be supplied. This table gives an overview:
 
 \begin{center}
 \begin{tabular}{|llp{7cm}|}\hline
-	{\bf basis entity} & {\bf format} & {\bf semantics}\\ \hline \hline
-	1d-point & {\tt (id x)} & Real-valued position of the point \\
-	interval & {\tt (id s e)} & Real-valued (closed) interval\\
-	2d-point & {\tt (id x y)} & Real-valued coordinates \\
-	2d-oriented-point & {\tt (id x y dx dy)} & Real-valued coordinates and direction of the orientation\\
-	dipole & {\tt (id xs ys xe ye)} & Directed line segment connecting the 2d points (xs ys) and (xe ye)\\
-	2d-box & {\tt (id x1 y1 x2 y2)} & Axis-aligned rectangle with bottom left point (x1,y1) and top right point (x2,y2)\\
-	polygon & {\tt (id x1 y1 ... xn yn)} & Polygon with vertices (x1,y1), (x2,y2), ... (xn,yn)\\
+	{\bfseries basis entity} & {\bfseries format} & {\bfseries semantics}\\ \hline \hline
+	1d-point & \texttt{ (id x)} & Real-valued position of the point \\
+	interval & \texttt{ (id s e)} & Real-valued (closed) interval\\
+	2d-point & \texttt{ (id x y)} & Real-valued coordinates \\
+	2d-oriented-point & \texttt{ (id x y dx dy)} & Real-valued coordinates and direction of the orientation\\
+	dipole & \texttt{ (id xs ys xe ye)} & Directed line segment connecting the 2d points (xs ys) and (xe ye)\\
+	2d-box & \texttt{ (id x1 y1 x2 y2)} & Axis-aligned rectangle with bottom left point (x1,y1) and top right point (x2,y2)\\
+	polygon & \texttt{ (id x1 y1 ... xn yn)} & Polygon with vertices (x1,y1), (x2,y2), ... (xn,yn)\\
 	\hline
 \end{tabular}
 \end{center}
@@ -959,9 +960,9 @@ The qualify module has one module specific parameter {\em mode} that needs to be
 specified. It controls which relations are included into the qualitative scene description; there are two settings:
 
 \begin{description}
-	\item[{\tt all}] The relation between every object and every other object will be included. In the case of a binary calculus \engine{} prints out a configuration containing $n^2$ relations, if $n$ is the total number of  objects in the scene description.
+	\item[\texttt{ all}] The relation between every object and every other object will be included. In the case of a binary calculus \engine{} prints out a configuration containing $n^2$ relations, if $n$ is the total number of  objects in the scene description.
 
-	\item[{\tt first2all}] If mode is set to {\tt first2all} only the relations between the first and all other objects are computed in the binary case or between the first two objects and all other objects in the ternary case.
+	\item[\texttt{ first2all}] If mode is set to \texttt{ first2all} only the relations between the first and all other objects are computed in the binary case or between the first two objects and all other objects in the ternary case.
 \end{description}
 
 The resulting qualitative scene description is a space-separated list
@@ -984,7 +985,7 @@ followed by the result is\footnote{In all the examples, input lines start with `
 If we had chosen `first2all' as mode parameter the relation between $B$ and $C$ would not have been included in the qualitative scene description.
 
 \section{Quantify}
-The {\tt quantify} command complements the {\tt qualify} in the sense that it computes an exemplary geometric scene from a constraint network.
+The \texttt{ quantify} command complements the \texttt{ qualify} in the sense that it computes an exemplary geometric scene from a constraint network.
 
 \shell{./sparq quantify allen "((a b b) (a fi c))"}{((C 1 2) (B 5 6) (A 3 4))}
 
@@ -1025,35 +1026,35 @@ as arguments on the command line.
 
 \begin{longtable}{|l|p{8cm}|}
 \hline
-\multicolumn{2}{|l|}{\bf spatial:}\\ \hline
-{\tt composition, comp} & $ (r, s) \mapsto r \circ s$\\
-{\tt ternary-composition, tcomp}\ternaryonly & $ (r, s, t) \mapsto \bullet (r,s,t)$\\
-{\tt n-ary-composition, ncomp}& $ (r_1, \ldots, r_n) \mapsto \bullet (r_1, \ldots, r_n)$\\
-{\tt converse, cnv}\binaryonly & $r \mapsto r^{\smile}$ \\
-{\tt homing, hm}\ternaryonly & $ r \mapsto hm(r)$\\
-{\tt homingi, hmi}\ternaryonly & $ r \mapsto inv(hm(r))$\\
-{\tt inverse, inv}\ternaryonly & $ r \mapsto inv(r)$\\
-{\tt shortcut, sc}\ternaryonly & $ r \mapsto sc(r)$\\
-{\tt shortcuti, sci}\ternaryonly & $ r \mapsto inv(sc(r))$\\[1ex]
+\multicolumn{2}{|l|}{\bfseries spatial:}\\ \hline
+\texttt{ composition, comp} & $ (r, s) \mapsto r \circ s$\\
+\texttt{ ternary-composition, tcomp}\ternaryonly & $ (r, s, t) \mapsto \bullet (r,s,t)$\\
+\texttt{ n-ary-composition, ncomp}& $ (r_1, \ldots, r_n) \mapsto \bullet (r_1, \ldots, r_n)$\\
+\texttt{ converse, cnv}\binaryonly & $r \mapsto r^{\smile}$ \\
+\texttt{ homing, hm}\ternaryonly & $ r \mapsto hm(r)$\\
+\texttt{ homingi, hmi}\ternaryonly & $ r \mapsto inv(hm(r))$\\
+\texttt{ inverse, inv}\ternaryonly & $ r \mapsto inv(r)$\\
+\texttt{ shortcut, sc}\ternaryonly & $ r \mapsto sc(r)$\\
+\texttt{ shortcuti, sci}\ternaryonly & $ r \mapsto inv(sc(r))$\\[1ex]
 \hline
-\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bf calculi-theoretic:}}}\\ \hline
-{\tt closure} & $ r_1 r_2 \ldots r_n \mapsto Cl(r_1,r_2,\ldots, r_n)$\newline
+\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bfseries calculi-theoretic:}}}\\ \hline
+\texttt{ closure} & $ r_1 r_2 \ldots r_n \mapsto Cl(r_1,r_2,\ldots, r_n)$\newline
 $Cl$ denotes the minimal set of relations that is closed under composition, converse,
 and intersection\\
-{\tt base-closure} & $Cl(br_1,br_2,\ldots , br_n)$\newline
+\texttt{ base-closure} & $Cl(br_1,br_2,\ldots , br_n)$\newline
 Computes closure of the set of base relations\\
-{\tt test-properties} & Tests whether a calculus meets relation algebra axioms\\
+\texttt{ test-properties} & Tests whether a calculus meets relation algebra axioms\\
 \hline
-\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bf set-theoretic:}}}\\ \hline
-{\tt complement, cmpl} & $ r \mapsto r^C$\\
-{\tt minus} & $ r s \mapsto r \backslash s$\\
-{\tt union} & $ r s \mapsto r \cup s$\\
-{\tt intersection, isec} & $ r s \mapsto r \cap s$\\
+\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bfseries set-theoretic:}}}\\ \hline
+\texttt{ complement, cmpl} & $ r \mapsto r^C$\\
+\texttt{ minus} & $ r s \mapsto r \backslash s$\\
+\texttt{ union} & $ r s \mapsto r \cup s$\\
+\texttt{ intersection, isec} & $ r s \mapsto r \cap s$\\
 \hline
 \end{longtable}
 \noindent Commands marked \binaryonly are valid for binary calculi only, commands marked \ternaryonly are valid for ternary constraints only. 
 
-\note{The commands {\tt closure} and {\tt base-closure} are currently defined exclusively for binary calculi. The closure of a set of relations may be very large and computation may, consequently, take very long.}
+\note{The commands \texttt{ closure} and \texttt{ base-closure} are currently defined exclusively for binary calculi. The closure of a set of relations may be very large and computation may, consequently, take very long.}
 
 
 %\section{Conceptual neighborhoods}
@@ -1210,21 +1211,21 @@ Finally, operation `update' allows constraints to be overwritten:
 Overview of commands operating on constraints:
 \begin{longtable}{|p{4.5cm}|p{9cm}|}
 \hline
-\multicolumn{2}{|l|}{\bf consistency checking:}\\ \hline
-{\tt check-consistency} & decides consistency using calculus-specific consistency check\\[0,5ex]
-{\tt algebraic-closure}, {\tt a-closure}, {\tt path-consistency}  & Enforces path-consistency --- since this is a purely syntactical operation on the
+\multicolumn{2}{|l|}{\bfseries consistency checking:}\\ \hline
+\texttt{ check-consistency} & decides consistency using calculus-specific consistency check\\[0,5ex]
+\texttt{ algebraic-closure}, \texttt{ a-closure}, \texttt{ path-consistency}  & Enforces path-consistency --- since this is a purely syntactical operation on the
 					level of qualitative relations the term ``algebraic closure'' is more adequate.
 					However, since ``path-consistency'' is widely used in this meaning, this name is
 					supported too.\\[0,5ex]
-{\tt scenario-consistency} & Computes algebraically closed networks containing base-relations only\\[0,5ex]
-{\tt ternary-closure} & Computes algebraically closed networks using ternary composition with ternary calculi\\[0,5ex]
-{\tt match} & Computes possible correspondence (isomorphy and joint consistence)\\[0,5ex]
-%{\tt best-match} & Interactively computes possible correspondence (isomorphy and joint consistence)\\[1,0ex]
+\texttt{ scenario-consistency} & Computes algebraically closed networks containing base-relations only\\[0,5ex]
+\texttt{ ternary-closure} & Computes algebraically closed networks using ternary composition with ternary calculi\\[0,5ex]
+\texttt{ match} & Computes possible correspondence (isomorphy and joint consistence)\\[0,5ex]
+%\texttt{ best-match} & Interactively computes possible correspondence (isomorphy and joint consistence)\\[1,0ex]
 \hline
-\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bf manipulating constraint networks:}}}\\[0,5ex] \hline
-{\tt refine} & Merges two networks by intersecting corresponding constraints\\[0,5ex]
-{\tt extend} & Merges two networks by uniting corresponding constraints\\[0,5ex]
-{\tt update} & Merges two networks by overwriting corresponding constraints\\ \hline
+\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bfseries manipulating constraint networks:}}}\\[0,5ex] \hline
+\texttt{ refine} & Merges two networks by intersecting corresponding constraints\\[0,5ex]
+\texttt{ extend} & Merges two networks by uniting corresponding constraints\\[0,5ex]
+\texttt{ update} & Merges two networks by overwriting corresponding constraints\\ \hline
 \end{longtable}
 
 \section{Algebraic reasoning}\label{sec:a-reasoning}
@@ -1240,9 +1241,9 @@ The algebraic reasoning module provided consistency analysis of constraint netwo
 Networks are denoted as defined in the context of the constraint based reasoning  module.
 Possible results:
 \begin{description}
-	\item[{\tt SATISFIABLE}] The network is proven to be satisfiable.
-	\item[{\tt NOT SATISFIABLE.}] The network is proven to be unsatisfiable.
-	\item[{\tt CANNOT DECIDE.}] Neither one of the above proofs succeeded.
+	\item[\texttt{ SATISFIABLE}] The network is proven to be satisfiable.
+	\item[\texttt{ NOT SATISFIABLE.}] The network is proven to be unsatisfiable.
+	\item[\texttt{ CANNOT DECIDE.}] Neither one of the above proofs succeeded.
 \end{description}
 
 Currently, the implementation of the algebraic reasoning module aims at proving inconsistency of constraint networks, thus the answer ``satisfiable'' appears only rarely. Making algebraic reasoning a more powerful tool is ongoing research.
@@ -1250,14 +1251,14 @@ Currently, the implementation of the algebraic reasoning module aims at proving 
 \noindent Example:\\ \noindent
 \cmdline{sparq -v a-reasoning ff consistency  "((A B l C) (B C l D) (A B f D))"}
 
-By turning on the verbose mode (command line option ``{\tt -v}''), the proof generated by \engine{} is printed to the console. Algebraic reasoning as implemented in \engine{} is based on analyzing Gr\"obner bases. Computing Gr\"obner bases is a computationally very expensive process and a time limit is implemented into \engine{} to prevent hangs. Currently, the time limit is hard wired to approx.~17 minutes. To abort an ongoing computation, use Control-C to stop \engine{}. Currently, the time limit is a compile-time option, hence, to increase time limit, your need to change the source parameter declaration {\tt *timeout*} in the beginning of {\tt Source/polysolver.lisp}. Note that the unit size is ms here.
+By turning on the verbose mode (command line option ``\texttt{ -v}''), the proof generated by \engine{} is printed to the console. Algebraic reasoning as implemented in \engine{} is based on analyzing Gr\"obner bases. Computing Gr\"obner bases is a computationally very expensive process and a time limit is implemented into \engine{} to prevent hangs. Currently, the time limit is hard wired to approx.~17 minutes. To abort an ongoing computation, use Control-C to stop \engine{}. Currently, the time limit is a compile-time option, hence, to increase time limit, your need to change the source parameter declaration \texttt{ *timeout*} in the beginning of \texttt{ Source/polysolver.lisp}. Note that the unit size is ms here.
 
 Due to the computational demands of algebraic reasoning we advice users to utilize this method only for analyzing small constraint networks. The most useful application of this module is for computing calculus operations. 
 
 \subsubsection*{Example: computing calculus operations}
 Suppose, you are about to introduce a new qualitative calculus and have designed the set of base relations. In order to do any constraint based reasoning with this new calculus, permutation operations (converse, inverse, shortcut, etc.) and the composition operation need to be defined. Determining composition operation tables is a demanding process: all 3-consistent constraint networks involving $k+1$ base objects need to be computed whereby $k$ denotes the arity of the calculus. In such situations algebraic reasoning can be effectively applied to rule out inconsistent networks. Consider again the example from above, analyzing the constraint network 
 \begin{center}
-	{\tt ((A B l C) (B C l D) (A B f D))}
+	\texttt{ ((A B l C) (B C l D) (A B f D))}
 \end{center}
 in context of the FlipFlop base relations (see \ref{sec:flip-flop}) \engine{} will come up with the reply that the given network is not consistent. Therefore, the relation ``f'' (front) is not a possible result of the composition of ``l'' and ``l'' (left). To automate operation analysis an additional command is implemented.
 
@@ -1278,15 +1279,15 @@ progress. r        analysis
 
 The dots in the progress column are printed to show the progress of the verification, the column labeled ``r'' lists the relation examined. The column analysis lists the result which is one of the following:
 \begin{description}
-	\item[{\tt Verified}] The entry of the operation table as given in the calculus specification has been verified.
+	\item[\texttt{ Verified}] The entry of the operation table as given in the calculus specification has been verified.
 
-	\item[{\tt CANNOT INCLUDE (r1 r2 ...)}] The reported base relations are listed in the operation table but they cannot be the result of applying the operation. This is an error in the operation table - remove the conflicting relations.
+	\item[\texttt{ CANNOT INCLUDE (r1 r2 ...)}] The reported base relations are listed in the operation table but they cannot be the result of applying the operation. This is an error in the operation table - remove the conflicting relations.
 	
-	\item[{\tt ALSO INCLUDES: (r1 r2 ...)}] The reported base relations have been proved to be missing in the operation table - add them.
+	\item[\texttt{ ALSO INCLUDES: (r1 r2 ...)}] The reported base relations have been proved to be missing in the operation table - add them.
 
-	\item[{\tt could not prove membership of: (r1 r2 ...)}] The reported base relations are listed in the operation table, but no proof could be generated to show that these relations can be the result of applying the operation to $r$. This does not indicate an error in the operation table.
+	\item[\texttt{ could not prove membership of: (r1 r2 ...)}] The reported base relations are listed in the operation table, but no proof could be generated to show that these relations can be the result of applying the operation to $r$. This does not indicate an error in the operation table.
 
-	\item[{\tt could not prove non-membership of: (r1 r2 ...)}] The reported base relations are not listed in the operation table, but no proof could be generated to show that these relations cannot be the result of applying the operation to $r$. This does not indicate an error in the operation table.
+	\item[\texttt{ could not prove non-membership of: (r1 r2 ...)}] The reported base relations are not listed in the operation table, but no proof could be generated to show that these relations cannot be the result of applying the operation to $r$. This does not indicate an error in the operation table.
 \end{description}
 
 \subsection{Qualification}
@@ -1298,21 +1299,21 @@ Syntax and options are the same as for the qualification module described in Sec
 
 \section{Analyzing Calculi}\label{sec:analyze-calculus}
 \engine{} involves a set of commands that aim to aid researchers to analyze qualitative calculi. 
-These commands are summarized in the module {\tt analyze-calculus} and are named as follows:
+These commands are summarized in the module \texttt{ analyze-calculus} and are named as follows:
 \begin{description}
-	\item[{\tt test-algebra}] Using this command one can check whether a calculus definition meets the axioms that define a relation algebra in the sense of Tarski. The command is also helpful to identify potential errors in operation tables of newly added calculi---if \engine{} only reports very few violations of an axiom, these violations may be caused my en erroneous entry in an operation table
+	\item[\texttt{ test-algebra}] Using this command one can check whether a calculus definition meets the axioms that define a relation algebra in the sense of Tarski. The command is also helpful to identify potential errors in operation tables of newly added calculi---if \engine{} only reports very few violations of an axiom, these violations may be caused my en erroneous entry in an operation table
 	
-	\item[{\tt test-property}] This command allows specific properties or axioms to be tested for a specific calculus. 
-	Essentially, \engine{} checks a single statement as usable with the {\tt compute-relation}-command with quantified variables. 
-	We illustrate this by an example, checking whether {\tt rrc5} has an idempotent converse operation:
+	\item[\texttt{ test-property}] This command allows specific properties or axioms to be tested for a specific calculus. 
+	Essentially, \engine{} checks a single statement as usable with the \texttt{ compute-relation}-command with quantified variables. 
+	We illustrate this by an example, checking whether \texttt{ rrc5} has an idempotent converse operation:
 	\cmdline{./sparq analyze-calculus rcc5 test-property "(forall r baserel) (equals r (converse (converse r)))"}
-	Here, {\tt} is a variable ranging over all base relations of the RCC-5 calculus. 
+	Here, \texttt{ r} is a variable ranging over all base relations of the RCC-5 calculus. 
 	Note that the quotes are necessary to prevent a Unix shell from interpreting parenthesis expressions.
-	It is possible to use quantifiers {\tt exists} and {\tt forall}, ranging over either base relations ({\tt baserel}) or all general relations ({\tt rel}). 
-	Special operators for comparing relations that are likely used with this command are {\tt equal, covers, coverseq} (either {\tt equal} or {\tt covers} hold), {\tt coveredBy, coveredByEq}.
+	It is possible to use quantifiers \texttt{ exists} and \texttt{ forall}, ranging over either base relations (\texttt{ baserel}) or all general relations (\texttt{ rel}). 
+	Special operators for comparing relations that are likely used with this command are \texttt{ equal, covers, coverseq} (either \texttt{ equal} or \texttt{ covers} hold), \texttt{ coveredBy, coveredByEq}.
 	
 
-	\item[{\tt algebra-stats}] Operation tables of calculi often differ in their information content, e.g., how often a universal relation occurs as the result of applying a composition operation. This command determines the information content of applying $k$ steps of composition, an additional parameter determines the time in seconds to spend on analyzing the calculus.
+	\item[\texttt{ algebra-stats}] Operation tables of calculi often differ in their information content, e.g., how often a universal relation occurs as the result of applying a composition operation. This command determines the information content of applying $k$ steps of composition, an additional parameter determines the time in seconds to spend on analyzing the calculus.
 	
 \end{description}
 
@@ -1325,12 +1326,12 @@ TBD
 \begin{table}
 \begin{tabular}{lp{7.5cm}}
 \toprule
-\multicolumn{2}{l}{\tt neighborhood-reasoning <CALCULUS> <NEIGHBORHOOD> ...}\\
-{\tt \small similarity OP <CSP> <CSP>} & computes similarity of two constraint-networks, using OP as distance accumulation operation\\
-{\tt \small neighbors <REL> } & gives the conceptual neighbors of a relation\\
-{\tt \small merge OP OP <CSP> <CSP} & merges two constraint networks, using OP as distance accumulation operation\\
-{\tt \small relax <RELATION>} & coarsens relation by including all conceptual neighbors of a relation\\
-{\tt \small neighborhood-distance <REL> <REL> } & distance in the neighborhood graph\\ 
+\multicolumn{2}{l}\texttt{ neighborhood-reasoning <CALCULUS> <NEIGHBORHOOD> ...}\\
+\texttt{ \small similarity OP <CSP> <CSP>} & computes similarity of two constraint-networks, using OP as distance accumulation operation\\
+\texttt{ \small neighbors <REL> } & gives the conceptual neighbors of a relation\\
+\texttt{ \small merge OP OP <CSP> <CSP} & merges two constraint networks, using OP as distance accumulation operation\\
+\texttt{ \small relax <RELATION>} & coarsens relation by including all conceptual neighbors of a relation\\
+\texttt{ \small neighborhood-distance <REL> <REL> } & distance in the neighborhood graph\\ 
 \bottomrule
 \end{tabular}
 \caption{\label{tab:cnh-commands}Summary of commands for neighborhood-based reasoning}
@@ -1344,8 +1345,8 @@ Currently, \engine{} provides only means for exporting calculi specification to 
 
 where type is one of
 \begin{description}
-	\item[{\tt qat}] QAT is a toolkit for qualitative spatial and temporal reasoning written in Java \citep{Condotta_Ligozat_Saade_06_A} that uses an xml format for calculi specifications. Currently, only binary calculi can be exported into this format. For more information see:\\ \verb=http://www.cril.univ-artois.fr/~saade/QAT=
-	\item[{\tt gqr}] GQR is a generic constraint reasoner for binary calculi, i.e., it provides an alternative implementation of \engine{}'s constraint-reasoning module but limited to binary calculi. For more information see:\\ \verb=https://sfbtr8.informatik.uni-freiburg.de/R4LogoSpace/Resources/GQR=
+	\item[\texttt{ qat}] QAT is a toolkit for qualitative spatial and temporal reasoning written in Java \citep{Condotta_Ligozat_Saade_06_A} that uses an xml format for calculi specifications. Currently, only binary calculi can be exported into this format. For more information see:\\ \verb=http://www.cril.univ-artois.fr/~saade/QAT=
+	\item[\texttt{ gqr}] GQR is a generic constraint reasoner for binary calculi, i.e., it provides an alternative implementation of \engine{}'s constraint-reasoning module but limited to binary calculi. For more information see:\\ \verb=https://sfbtr8.informatik.uni-freiburg.de/R4LogoSpace/Resources/GQR=
 \end{description}
 
 By invoking the export command, \engine{} creates a file \verb=<filename>= (two in the case of GQR export) in \engine{}'s main directory.
@@ -1354,26 +1355,26 @@ By invoking the export command, \engine{} creates a file \verb=<filename>= (two 
 \section{Interactive Mode}\label{sec:interactive}
 
 \engine{} can be started in interactive mode to process commands repeatedly. This greatly reduces
-overhead of loading the program or calculi definitions. Interactive mode is activated by the command line option {\tt -i} (or {\tt --interactive}). The command syntax is identical to the standard mode of operation, there are some additional commands though:\pagebreak[4]
+overhead of loading the program or calculi definitions. Interactive mode is activated by the command line option \texttt{ -i} (or \texttt{ --interactive}). The command syntax is identical to the standard mode of operation, there are some additional commands though:\pagebreak[4]
 
 \begin{center}
 \begin{longtable}{|lp{9cm}|}\hline
-	{\bf command} & {\bf description} \\ \hline \hline
-	{\tt quit} & exits \engine{}\\
-	{\tt help} & prints short help message\\
-	{\tt load-calculus CALC} & loads a specified calculus into memory\\
-	{\tt *} & used as calculus specifier in commands, {\tt *} stands for the calculus recently loaded into memory. This avoids overhead of reloading a calculus\\
-	{\tt let VAR = EXP} & binds expression/result of command to variable\\
-	{\tt let (VAR1 ... VARN) = EXP} & bind multiple variables to commands providing multiple return values\\
-	{\tt print \$VAR} & print value bound to variable\\
+	{\bfseries command} & {\bfseries description} \\ \hline \hline
+	\texttt{ quit} & exits \engine{}\\
+	\texttt{ help} & prints short help message\\
+	\texttt{ load-calculus CALC} & loads a specified calculus into memory\\
+	\texttt{ *} & used as calculus specifier in commands, \texttt{ *} stands for the calculus recently loaded into memory. This avoids overhead of reloading a calculus\\
+	\texttt{ let VAR = EXP} & binds expression/result of command to variable\\
+	\texttt{ let (VAR1 ... VARN) = EXP} & bind multiple variables to commands providing multiple return values\\
+	\texttt{ print \$VAR} & print value bound to variable\\
 	 \hline
 \end{longtable}
 \end{center}
 
 \subsection{Variables}
 In the interactive mode, \engine{} provides simple variables to reduce typing effort -- or network traffic, if \engine{} is interfaced using sockets. 
-Variables are set using the {\tt let} command; {\tt print} allows values to be printed out. 
-As some commands return multiple values, {\tt let} allows multiple variables to be bound at once, the special name \verb=_= (underscore sign) can be used to ignore a value.
+Variables are set using the \texttt{ let} command; \texttt{ print} allows values to be printed out. 
+As some commands return multiple values, \texttt{ let} allows multiple variables to be bound at once, the special name \verb=_= (underscore sign) can be used to ignore a value.
 When used in commands, variables are marked by a leading dollar sign. Note that names are case insensitive. Here is an example on using variables:
 
 \outp{SparQ> let myScene = qualify pc all ((a 1) (b 2) (c 1/4))\\
@@ -1381,7 +1382,7 @@ When used in commands, variables are marked by a leading dollar sign. Note that 
 SparQ> let myNeWScene = constraint-reasoning pc extend \$myscene ((a < d))\\
 > ((A (<) B) (A (>) C) (A (<) D) (B (>) C))\\[0.5ex]
 SparQ> let (\_ closedNet) = constraint-reasoning pc a-closure \$myNewScene\\
-Modified network.\hfill{\it ;; ignore first return value}\\
+Modified network.\hfill{\itshape ;; ignore first return value}\\
 ((B (>) C)(D (>) C)(D (< = >) B)(A (>) C)(A (<) B)(A (<) D))\\[0.5ex]
 SparQ> constraint-reasoning pc scenario-consistency first \$myNewScen\\
 ((D (>) A)(C (<) A)(C (<) D)(B (>) A)(B (>) D)(B (>) C))\\[0.5ex]
@@ -1410,11 +1411,8 @@ If no port is given, \engine{} interacts with standard-input and
 standard-output, i.e., it can
 be used interactively from the shell.
 
-%\lstset{language=Python}
-
-\lstinputlisting[basicstyle=\footnotesize\tt,language=Python,float=t,caption={Integrating \engine{} into own applications:
-  an example in Python.},label={fig:python-example},firstnumber=1]{python-integration.py}
-
+%\lstinputlisting[basicstyle=\footnotesize\texttt,language=Python,float=t,caption={Integrating \engine{}  into own applications: an example in Python.},label={fig:python-example},firstnumber=1]{python-integration.py}
+\lstinputlisting{python-integration.py}
 %$
 An example of client/server communication with \engine{} is given in Listing
 \ref{fig:python-example} which shows a small Python script
@@ -1444,8 +1442,8 @@ For most calculi it should be rather easy to include them
 into \engine{}. Adding a new calculus consists of two steps:
 
 \begin{enumerate}
-	\item Provide a calculus specification and store it in \engine{}'s subdirectory {\tt Calculi}
-	\item Register your calculus in the calculus registry {\tt Calculi/calculus-registry.lisp}
+	\item Provide a calculus specification and store it in \engine{}'s subdirectory \texttt{ Calculi}
+	\item Register your calculus in the calculus registry \texttt{ Calculi/calculus-registry.lisp}
 \end{enumerate}
 
 \engine{} also allows loading calculi from an arbitrary file (by supplying the path name as calculus argument), so calculi are not required to be registered permanently. Example:
@@ -1455,7 +1453,7 @@ into \engine{}. Adding a new calculus consists of two steps:
 \subsection{Calculus Specification}\label{sec:calculus-spec}
 
 Let us start by giving an example for a simple calculus for
-reasoning about distances between three point objects that distinguishes only the three relations `closer', `farther', and `same'. Following the intuition, $A\, B\, \text{\tt closer}\, C$ holds if and only if $A$ and $B$ are closer to one another than $A$ is to $C$. Farther and same are defined analogously.
+reasoning about distances between three point objects that distinguishes only the three relations `closer', `farther', and `same'. Following the intuition, $A\, B\, \texttt{ closer}\, C$ holds if and only if $A$ and $B$ are closer to one another than $A$ is to $C$. Farther and same are defined analogously.
 Listing \ref{fig:specification-reldist} shows the specification which is done in Lisp-like syntax.
 
 \lstset{language=LISP}
@@ -1494,25 +1492,25 @@ Any specification must be in the form
   {<SLOT-AND-OPTIONS>}* )
 \end{verbatim}
 where \verb=<NAME>= is a textual description of the calculus enclosed in double quotes. \linebreak[4]
-\verb=<SLOT-AND-OPTIONS>= refers to a collection of calculus properties (in no particular order) that consists of pairs of a so-called slot specifier (always starting with a colon) and slot-specific options. Table \ref{TAB:slots-in-calc-def} gives an overview. The abbreviations {\tt SRC} and {\tt LIB} stand for source code specification and library link which are explained thereafter.
+\verb=<SLOT-AND-OPTIONS>= refers to a collection of calculus properties (in no particular order) that consists of pairs of a so-called slot specifier (always starting with a colon) and slot-specific options. Table \ref{TAB:slots-in-calc-def} gives an overview. The abbreviations \texttt{ SRC} and \texttt{ LIB} stand for source code specification and library link which are explained thereafter.
 
 \begin{table}
 \rotatebox{90}{%
 \begin{tabular}{|lp{6cm}p{8cm}|}
-\hline {\bf slot} & {\bf arguments} & {\bf description} \\ \hline \hline
-{\tt :arity} & {\tt :binary$|$:ternary} & arity of the calculus\\
-{\tt :base-relations} & {\tt (r \{r-i\}$^*$) $|$ LIB $|$ SRC} & list of base relations\\
-{\tt :identity-relation} & {\tt r} & relation $r$ that holds in $A\, r\, A$\\
-{\tt :consistency} & {\tt method} & method for deciding consistency, one of {\tt :a-closure, :n-ary-closure, :scenario-consistency, :a-consistency, :n-ary-scenario-consistency}\\
-{\tt :converse-operation} & {\tt(\{(r1 r1-cnv)\}$^*$) $|$ LIB $|$ SRC} & lists of relations and their corresponding converse relation, reference to external library function, or Lisp code\\
-{\tt :inverse-operation} & 	{\tt(\{(r1 r1-inv)\}$^*$) $|$ LIB $|$ SRC} & lists of relations and their corresponding inverse relation, reference to external library function, or Lisp code\\
-{\tt :shortcut-operation} & {\tt(\{(r1 r1-sc)\}$^*$) $|$ LIB $|$ SRC} & lists of relations and their corresponding shortcut relation, reference to external library function, or Lisp code\\
-{\tt :homing-operation} & {\tt(\{(r1 r1-hm)\}$^*$) $|$ LIB $|$ SRC} & lists of relations and their corresponding homing relation, reference to external library function, or Lisp code\\
-{\tt :composition-operation} &  {\tt(\{(r1 r2 r1r2-cmp)\}$^*$) $|$ LIB $|$ SRC} & lists of two relations and their composition, reference to external library function, or Lisp code\\
-{\tt :n-ary-composition-operation} &  {\tt(\{(r1 r2 ... rn r-cmp)\}$^*$) $|$ LIB $|$ SRC} & lists of n relations and their composition, reference to external library function, or Lisp code\\
-{\tt :basis-entity} & {\tt :1d-point $|$ :interval $|$ :2d-point $|$ :dipole $|$ :2d-oriented-point $|$ :2d-box} & type of the basis objects, domain of the calculus\\
-{\tt :parametric?} & {\tt t $|$ nil} & Boolean whether the calculus depends on a parameter or not\\
-{\tt :qualifier} & {\tt :algebraic $|$ SRC $|$ LIB} & qualifier specification ({\tt :algebraic} is not yet fully functional)\\ \hline
+\hline {\bfseries slot} & {\bfseries arguments} & {\bfseries description} \\ \hline \hline
+\texttt{ :arity} & \texttt{ :binary$|$:ternary} & arity of the calculus\\
+\texttt{ :base-relations} & \texttt{ (r \{r-i\}$^*$) $|$ LIB $|$ SRC} & list of base relations\\
+\texttt{ :identity-relation} & \texttt{ r} & relation $r$ that holds in $A\, r\, A$\\
+\texttt{ :consistency} & \texttt{ method} & method for deciding consistency, one of \texttt{ :a-closure, :n-ary-closure, :scenario-consistency, :a-consistency, :n-ary-scenario-consistency}\\
+\texttt{ :converse-operation} & \texttt{(\{(r1 r1-cnv)\}$^*$) $|$ LIB $|$ SRC} & lists of relations and their corresponding converse relation, reference to external library function, or Lisp code\\
+\texttt{ :inverse-operation} & 	\texttt{(\{(r1 r1-inv)\}$^*$) $|$ LIB $|$ SRC} & lists of relations and their corresponding inverse relation, reference to external library function, or Lisp code\\
+\texttt{ :shortcut-operation} & \texttt{(\{(r1 r1-sc)\}$^*$) $|$ LIB $|$ SRC} & lists of relations and their corresponding shortcut relation, reference to external library function, or Lisp code\\
+\texttt{ :homing-operation} & \texttt{(\{(r1 r1-hm)\}$^*$) $|$ LIB $|$ SRC} & lists of relations and their corresponding homing relation, reference to external library function, or Lisp code\\
+\texttt{ :composition-operation} &  \texttt{(\{(r1 r2 r1r2-cmp)\}$^*$) $|$ LIB $|$ SRC} & lists of two relations and their composition, reference to external library function, or Lisp code\\
+\texttt{ :n-ary-composition-operation} &  \texttt{(\{(r1 r2 ... rn r-cmp)\}$^*$) $|$ LIB $|$ SRC} & lists of n relations and their composition, reference to external library function, or Lisp code\\
+\texttt{ :basis-entity} & \texttt{ :1d-point $|$ :interval $|$ :2d-point $|$ :dipole $|$ :2d-oriented-point $|$ :2d-box} & type of the basis objects, domain of the calculus\\
+\texttt{ :parametric?} & \texttt{ t $|$ nil} & Boolean whether the calculus depends on a parameter or not\\
+\texttt{ :qualifier} & \texttt{ :algebraic $|$ SRC $|$ LIB} & qualifier specification (\texttt{ :algebraic} is not yet fully functional)\\ \hline
 \end{tabular}}
 \caption{\label{TAB:slots-in-calc-def} Overview of the slots in calculi definitions and their options}
 \end{table}
@@ -1528,7 +1526,7 @@ Calculi comprise the definition of operations like converse or composition for w
 
 The tabular form is straight-forward. In the case of a unary operation (such as e.g., converse) it is simply a space-separated list of lists that give a relation and the respective outcome when applying the operation. Note that the operation needs only to be defined for base relations! In the case of the binary composition operation the tabular form is a list of lists that give the result for any combination of two base relations.
 
-The last two options of operation specification are particular relevant for defining a quantifier or defining parametrical calculi, i.e., calculi that are instantiated by some parameter(s). In \engine{}, these calculi use identifiers that end with a minus ``{\tt -}'', e.g., {\tt opra-}.
+The last two options of operation specification are particular relevant for defining a quantifier or defining parametrical calculi, i.e., calculi that are instantiated by some parameter(s). In \engine{}, these calculi use identifiers that end with a minus ``\texttt{ -}'', e.g., \texttt{ opra-}.
 
 
 \subsubsection{Lisp source operation specification}
@@ -1539,7 +1537,7 @@ Definitions may be supplied as Lisp function which then will be compiled by \eng
 :base-relations #'(lambda () (list 'closer 'farther 'same))
 \end{verbatim}
 
-As can be observed, relations are simply returned as lists of relations and symbols are used to represent base relations. When specifying an operation that requires an input parameter to the function (e.g., converse, composition), then these are the arguments passed to the provided function. If a parametric calculus is defined, then the parameter will be accessible in by the globally visible parameter {\tt calculi:*calculus-parameter*}.
+As can be observed, relations are simply returned as lists of relations and symbols are used to represent base relations. When specifying an operation that requires an input parameter to the function (e.g., converse, composition), then these are the arguments passed to the provided function. If a parametric calculus is defined, then the parameter will be accessible in by the globally visible parameter \texttt{ calculi:*calculus-parameter*}.
 
 Altogether, the exemplary specification from above is equivalent to
 
@@ -1547,16 +1545,16 @@ Altogether, the exemplary specification from above is equivalent to
 :base-relations (closer farther same)
 \end{verbatim}
 
-{\bf Note:} Though you must use lambda expressions to specify lisp functions, you may define additional functions or parameters in the calculus definition. As the Lisp programmer would expect, the calculus definition is processed by the Lisp compiler and {\tt def-calculus} is a (quite complex) compiler macro.
+{\bfseries Note:} Though you must use lambda expressions to specify lisp functions, you may define additional functions or parameters in the calculus definition. As the Lisp programmer would expect, the calculus definition is processed by the Lisp compiler and \texttt{ def-calculus} is a (quite complex) compiler macro.
 
 \subsubsection{Lisp source qualifier specification}
 
-Providing a lisp source definition for qualifiers is similar to specifying operations. In the case of a binary calculus you need to provide a 2-argument function, in the case of a ternary calculus a 3-argument function. These arguments are exactly those of the command qualify but without the object identifier, i.e., a qualifier for the point-based calculus (e.g., cardinal directions) requested by the command "qualify cardir ((A 2 3)  (B 1 3) (C -3 2))" will lead to calls passing the lists {\tt (2 3)}, {\tt (1 3)}, or {\tt (-3 2)} as arguments. Supplied functions are not required to do any error checking, as this is taken care of already.
+Providing a lisp source definition for qualifiers is similar to specifying operations. In the case of a binary calculus you need to provide a 2-argument function, in the case of a ternary calculus a 3-argument function. These arguments are exactly those of the command qualify but without the object identifier, i.e., a qualifier for the point-based calculus (e.g., cardinal directions) requested by the command "qualify cardir ((A 2 3)  (B 1 3) (C -3 2))" will lead to calls passing the lists \texttt{ (2 3)}, \texttt{ (1 3)}, or \texttt{ (-3 2)} as arguments. Supplied functions are not required to do any error checking, as this is taken care of already.
 
 
 \subsubsection{External operation libraries}
 
-All operations may be specified by giving a reference to an external library by writing \verb=(external-lib LIBNAME C_FUNC)=. Hereby, \verb=LIBNAME= must be a string (delimited by double quotes) referring to a shared library inside \engine{}'s subdirectory {\tt Lib/bin}, \verb=C_FUNC= (a string too) gives the name of the corresponding C function to call. In principal, any programming language can be used as long as it allows for building a shared library that provides functions that follow the C calling convention. The signature of the C function for unary operations must be
+All operations may be specified by giving a reference to an external library by writing \verb=(external-lib LIBNAME C_FUNC)=. Hereby, \verb=LIBNAME= must be a string (delimited by double quotes) referring to a shared library inside \engine{}'s subdirectory \texttt{ Lib/bin}, \verb=C_FUNC= (a string too) gives the name of the corresponding C function to call. In principal, any programming language can be used as long as it allows for building a shared library that provides functions that follow the C calling convention. The signature of the C function for unary operations must be
 
 \begin{verbatim}
 	const char* C_FUNC( const char* param, const char* relation)
@@ -1605,7 +1603,7 @@ Let $a$ denote the arity of a calculus (either $a=2$ or $a=3$) and let $d$ denot
 \end{center}
 
 \medskip
-{\bf Limitations:} Passing coordinates as fixed precision floating point numbers can introduce difficulties that arise due to rounding in computer arithmetics. If no special care is taken then it can easily happen that the relation between $A$ and $B$ obtained by qualification is not the converse of the relation obtained by qualifying the relation between $B$ and $A$.
+{\bfseries Limitations:} Passing coordinates as fixed precision floating point numbers can introduce difficulties that arise due to rounding in computer arithmetics. If no special care is taken then it can easily happen that the relation between $A$ and $B$ obtained by qualification is not the converse of the relation obtained by qualifying the relation between $B$ and $A$.
 
 To avoid this issue \engine{} can use precise (rational) arithmetics and qualifiers implemented in Lisp source code take advantage of this too. For external C functions this is not possible though.
 
@@ -1619,12 +1617,12 @@ Objects involved in a constrained network (e.g., represented by variables $A$, $
 \begin{tabular}{|llp{69mm}|}
 \hline
 basis entity & algebraic representation & variable representation of $A$, $B$, $C$\\ \hline \hline
-1d-point & $x$ & {\tt ax;\hspace*{1em} bx;\hspace*{1em} cx}\\ 
-interval & $a, b$ & {\tt a1, a2;\hspace*{1em} b1,b2}\\
-2d-point & $x, y$ & {\tt ax, ay;\hspace*{1em} bx, by;\hspace*{1em} cx, cy}\\ 
-2d-oriented-point & $x, y, dx, dy$ & {\tt ax, ay, adx, ady;\hspace*{1em} bx,by, bdx, bdy;\hspace*{1em} cx,cy,cdx,cdy}\\ 
-dipole & $sx, sy, ex, ey$ & {\tt sax, say, eax, eay; \hspace*{1em} sbx, aby, $\ldots$ }\\
-2d-box & $x_1,y_1,x_2,y_2$ & {\tt ablx, ably, atrx, atry, \hspace*{1em} bblx, bbly, $\ldots$ } (bl: bottom left, tr: top right)
+1d-point & $x$ & \texttt{ ax;\hspace*{1em} bx;\hspace*{1em} cx}\\ 
+interval & $a, b$ & \texttt{ a1, a2;\hspace*{1em} b1,b2}\\
+2d-point & $x, y$ & \texttt{ ax, ay;\hspace*{1em} bx, by;\hspace*{1em} cx, cy}\\ 
+2d-oriented-point & $x, y, dx, dy$ & \texttt{ ax, ay, adx, ady;\hspace*{1em} bx,by, bdx, bdy;\hspace*{1em} cx,cy,cdx,cdy}\\ 
+dipole & $sx, sy, ex, ey$ & \texttt{ sax, say, eax, eay; \hspace*{1em} sbx, aby, $\ldots$ }\\
+2d-box & $x_1,y_1,x_2,y_2$ & \texttt{ ablx, ably, atrx, atry, \hspace*{1em} bblx, bbly, $\ldots$ } (bl: bottom left, tr: top right)
 \\
 \hline
 \end{tabular}
@@ -1652,25 +1650,25 @@ is satisfied if and only if $r(A,B)$ holds whereby $x_1, \ldots x_k$ stand for t
 
 Polynomials are denoted in a list based syntax, for example:
 
-{\tt (0 = (1 ((ax 1))) (-1 ((bx 1)))) } stands for $0 = 1\cdot ax^1 - 1\cdot bx^1$. 
+\texttt{ (0 = (1 ((ax 1))) (-1 ((bx 1)))) } stands for $0 = 1\cdot ax^1 - 1\cdot bx^1$. 
 
 \section{Extending \engine{}}\label{sec:extending}
 Beyond adding new calculi, \engine{} offers a simple mechanism to introduce new tools. The aim of this method is to provide means for adding additional methods, either specific to a certain calculus, or general ones. 
-At startup, \engine{} will evaluate the contents of the file {\tt Lib/extensions.lisp} inside the \engine{} directory in which tool declarations are expected. Tools declared in {\tt Lib/extensions.lisp} are in all regards equivalent to the tools internally provided by \engine{}.
+At startup, \engine{} will evaluate the contents of the file \texttt{ Lib/extensions.lisp} inside the \engine{} directory in which tool declarations are expected. Tools declared in \texttt{ Lib/extensions.lisp} are in all regards equivalent to the tools internally provided by \engine{}.
 
 \begin{nopagebreak}
-Tool declaration is based on a simple macro {\tt def-tool} in which argument syntax and the call to the actual tool code are  declared. Here's the syntax:\\ \noindent
+Tool declaration is based on a simple macro \texttt{ def-tool} in which argument syntax and the call to the actual tool code are  declared. Here's the syntax:\\ \noindent
 \medskip
 \centerline{\framebox{\parbox{10cm}{%
 \noindent
-({\tt def-tool} ({\it argument}$^*$)\\
-\noindent\hspace*{5mm} {\tt :documentation "}{\it brief description}{\tt "}\\
-\noindent\hspace*{5mm}[{\tt :requires} {\it file$|$list-of-files}]\\
-\noindent\hspace*{5mm} {\it code)}}}}
+(\texttt{ def-tool} ({\itshape argument}$^*$)\\
+\noindent\hspace*{5mm} \texttt{ :documentation "}{\itshape brief description}\texttt{ "}\\
+\noindent\hspace*{5mm}[\texttt{ :requires} {\itshape file$|$list-of-files}]\\
+\noindent\hspace*{5mm} {\itshape code)}}}}
 \medskip
 \end{nopagebreak}
 
-Tool code inside {\tt def-tool} needs to be written in Lisp, but of course it can just be used to call some external non-Lisp code.
+Tool code inside \texttt{ def-tool} needs to be written in Lisp, but of course it can just be used to call some external non-Lisp code.
 
 \begin{itemize}
 	\item Please refer to the SBCL manual on how to invoke external C/C++ code residing in shared libraries---it's easy!
@@ -1680,7 +1678,7 @@ Tool code inside {\tt def-tool} needs to be written in Lisp, but of course it ca
 \engine{} involves a complex type system which shapes the way tool arguments are declared. This is covered in Section \ref{sec:internals} and we only give some examples here sufficient declaring simple tools:
 
 %\lstset{%
-%basicstyle=\tt
+%basicstyle=\texttt
 %}
 \begin{lstlisting}
 (def-tool ("translate" (c (calculus allen)) (csp constraint-network c) "point-caluclus")
@@ -1688,7 +1686,7 @@ Tool code inside {\tt def-tool} needs to be written in Lisp, but of course it ca
   :requires      "translators/my-allen->pc-translator.lisp"
   (do-the-work csp))
 \end{lstlisting}
-This command would declare a tool ``translate" that would take as input two parameters, {\tt c} which is a calculus and {\tt csp}, which is a constraint-network. More precisely, {\tt c} must be a calculus of type ``allen" which, is satisfied by Allen's interval algebra. Additionally, the constraint-network must be defined over the calculus {\tt c}, i.e., it must only involve Allen relations. If matching parameters are supplied, the function {\tt do-the-work} is invoked which is assumed to reside in the file specified by {\tt :requires}.
+This command would declare a tool ``translate" that would take as input two parameters, \texttt{ c} which is a calculus and \texttt{ csp}, which is a constraint-network. More precisely, \texttt{ c} must be a calculus of type ``allen" which, is satisfied by Allen's interval algebra. Additionally, the constraint-network must be defined over the calculus \texttt{ c}, i.e., it must only involve Allen relations. If matching parameters are supplied, the function \texttt{ do-the-work} is invoked which is assumed to reside in the file specified by \texttt{ :requires}.
 With command declarations, overloading a tool similar to object-oriented programming is possible.
 
 
@@ -1700,7 +1698,7 @@ With command declarations, overloading a tool similar to object-oriented program
 \end{lstlisting}
 
 This tool shows a simple way of invoking an external program (here: the Unix ls tool) and retrieving the output generated. 
-The only argument to this command, {\tt which}, is declared to be of type {\tt symbol}, the Lisp type corresponding to identifiers in other programming languages.\footnote{Lisp programmers may wonder about case-(in)sensitivity here: \engine{} uses 
+The only argument to this command, \texttt{ which}, is declared to be of type \texttt{ symbol}, the Lisp type corresponding to identifiers in other programming languages.\footnote{Lisp programmers may wonder about case-(in)sensitivity here: \engine{} uses 
 a case-sensitive read-table for parsing user input. Later, case information is stripped away for identifiers. Thus, symbol-name as used here will yield a string preserving cases.}
 
 
@@ -1738,27 +1736,27 @@ SparQ> check-matches rcc8 ((A (po eq) B) (A ntpp C)) all ((A (1.0 2.3
 
 Our tool declaration makes use of several facets of the type system:
 \begin{description}
-	\item[{\tt "check-matches"}] Though not precisely a type specifier, string arguments are introduced as short-hand notations for types that only consists of a single object (the string given) and for which no argument will be defined.
+	\item[\texttt{ "check-matches"}] Though not precisely a type specifier, string arguments are introduced as short-hand notations for types that only consists of a single object (the string given) and for which no argument will be defined.
 	
-	\item[{\tt (calculus rcc8)}] Denotes a \engine{} built-in type specialized to {\tt rcc8} (see next section on implementation details). This roughly corresponds to Lisp's type specializers such as, for example {\tt integer} vs.~{\tt (integer 0 10)}.
+	\item[\texttt{ (calculus rcc8)}] Denotes a \engine{} built-in type specialized to \texttt{ rcc8} (see next section on implementation details). This roughly corresponds to Lisp's type specializers such as, for example \texttt{ integer} vs.~\texttt{ (integer 0 10)}.
 	
-	\item[{\tt constraint-network c}] declares a type {\tt constraint-network} which additionally depends on the argument {\tt c} in the command's lambda-list. The argument {\tt c} of type {\tt (calculus rcc8)} will be supplied to the parser dedicated to the type {\tt constraint- network}---see next section for details. \engine{} automatically determines a suitable order in which to parse arguments.
+	\item[\texttt{ constraint-network c}] declares a type \texttt{ constraint-network} which additionally depends on the argument \texttt{ c} in the command's lambda-list. The argument \texttt{ c} of type \texttt{ (calculus rcc8)} will be supplied to the parser dedicated to the type \texttt{ constraint- network}---see next section for details. \engine{} automatically determines a suitable order in which to parse arguments.
 	
-	\item[{\tt real}] a simple real number (which may be either an integer or fractional number type)
+	\item[\texttt{ real}] a simple real number (which may be either an integer or fractional number type)
 
-	\item[{\tt (member first all)}] the argument {\tt option} is declared as a standard Lisp type using the type constructor {\tt member} to declare a type that exclusively consists of the two symbols {\tt first} and {\tt all}. Similarly, all other Lisp type constructors can be used.
+	\item[\texttt{ (member first all)}] the argument \texttt{ option} is declared as a standard Lisp type using the type constructor \texttt{ member} to declare a type that exclusively consists of the two symbols \texttt{ first} and \texttt{ all}. Similarly, all other Lisp type constructors can be used.
 		
-	\item[{\tt (sparq:list-of simple-polygon)}] combines a \engine{}-specific list type specialized to the type {\tt simple-polygon}, i.e., all members of the list are declared to be of the type {\tt simple-polygon}.
+	\item[\texttt{ (sparq:list-of simple-polygon)}] combines a \engine{}-specific list type specialized to the type \texttt{ simple-polygon}, i.e., all members of the list are declared to be of the type \texttt{ simple-polygon}.
 	
 \end{description}
 
 \subsubsection{\engine{} primitive class}
-New types (in particularly those used in the user/tool interface) are declared as classes inheriting from the class {\tt sparq:primitive}, which is defined in the file ``commands''. There are some methods defined for the purpose of interfacing with the user:
+New types (in particularly those used in the user/tool interface) are declared as classes inheriting from the class \texttt{ sparq:primitive}, which is defined in the file ``commands''. There are some methods defined for the purpose of interfacing with the user:
 
 \begin{description}
-	\item[{\tt parse-primitive}]--- method dedicated to parsing user input
-	\item[{\tt initialize-primitive}]--- method for post-parsing object initialization. This method exists to enable delaying costly object initialization until all parsing has been completed successfully
-	\item[{\tt describe-primitive}]--- writing a textual description to be used with \engine{} help command
+	\item[\texttt{ parse-primitive}]--- method dedicated to parsing user input
+	\item[\texttt{ initialize-primitive}]--- method for post-parsing object initialization. This method exists to enable delaying costly object initialization until all parsing has been completed successfully
+	\item[\texttt{ describe-primitive}]--- writing a textual description to be used with \engine{} help command
 \end{description}
 
 In order to develop a new type, declare an appropriate class and specialize the parse-primitive method using an EQL-specializer.
@@ -1785,10 +1783,10 @@ In order to develop a new type, declare an appropriate class and specialize the 
 )
 \end{lstlisting}
 
-The method {\tt parse-primitive} needs a closer look: in order to parse dependent types and type parameters such as, for example, {\tt (calculus allen)}, \engine{} will invoke the parse-primitive method of the appropriate type (here: {\tt calculus}) and supply the specifiers as {\tt \&rest} parameters. 
-It is the duty of {\tt parse-primitive} to check that any additional specializers are satisfied.
+The method \texttt{ parse-primitive} needs a closer look: in order to parse dependent types and type parameters such as, for example, \texttt{ (calculus allen)}, \engine{} will invoke the parse-primitive method of the appropriate type (here: \texttt{ calculus}) and supply the specifiers as \texttt{ \&rest} parameters. 
+It is the duty of \texttt{ parse-primitive} to check that any additional specializers are satisfied.
 
-In case of dependent types, additional information will also be supplied as {\tt \&rest/\&key} parameter. 
+In case of dependent types, additional information will also be supplied as \texttt{ \&rest/\&key} parameter. 
 Consider the following tool declaration:
 
 \begin{lstlisting}
@@ -1796,7 +1794,8 @@ Consider the following tool declaration:
  ...)
 \end{lstlisting}
 
-Here, the constraint-networks {\tt cn} and {\tt cn2} both depend on the calculus {\tt c}. During parsing the arguments {\tt cn} and {\tt cn2}, \engine{} will supply the calculus parameter {\tt} as {\tt \&key} argument to {\tt parse-primitive} EQL-specialized to {\tt constraint-network}; parsing then roughly looks like this:
+Here, the constraint-networks \texttt{ cn} and \texttt{ cn2} both depend on the calculus \texttt{ c}. 
+When parsing the arguments \texttt{ cn} and \texttt{ cn2}, \engine{} will supply the calculus parameter \texttt{ c} as \texttt{ \&key} argument to \texttt{ parse-primitive} EQL-specialized to \texttt{ constraint-network}; parsing then roughly looks like this:
 \begin{lstlisting}
 (defmethod parse-primitive ((x (eql 'constraint-network)) expression &key calculus)
  ;; step 1: check that "expression" is a proper CSP
@@ -2026,99 +2025,99 @@ Each calculi description in this section starts with a box summarizing the main 
 \chapter{Quick Reference}
 
 \section{Command Summary}
-\section*{\tt compute-relation c op arg-1 \{arg-i\}}
+\section*{\texttt{ compute-relation c op arg-1 \{arg-i\}}}
 
-Applies operation {\tt op} of calculus {\tt c} to arguments. Operations:
+Applies operation \texttt{ op} of calculus \texttt{ c} to arguments. Operations:
 \begin{longtable}{|l|p{10cm}|}
 \hline
-\multicolumn{2}{|l|}{\bf spatial:}\\ \hline
-{\tt composition, comp} & $ r s \mapsto r \circ s$\\
-{\tt converse, cnv}\binaryonly & $r \mapsto r^{\smile}$ \\
-{\tt homing, hm}\ternaryonly & $ r \mapsto hm(r)$\\
-{\tt homingi, hmi}\ternaryonly & $ r \mapsto inv(hm(r))$\\
-{\tt inverse, inv}\ternaryonly & $ r \mapsto inv(r)$\\
-{\tt shortcut, sc}\ternaryonly & $ r \mapsto sc(r)$\\
-{\tt shortcuti, sci}\ternaryonly & $ r \mapsto inv(sc(r))$\\[1ex]
+\multicolumn{2}{|l|}{\bfseries spatial:}\\ \hline
+\texttt{ composition, comp} & $ r s \mapsto r \circ s$\\
+\texttt{ converse, cnv}\binaryonly & $r \mapsto r^{\smile}$ \\
+\texttt{ homing, hm}\ternaryonly & $ r \mapsto hm(r)$\\
+\texttt{ homingi, hmi}\ternaryonly & $ r \mapsto inv(hm(r))$\\
+\texttt{ inverse, inv}\ternaryonly & $ r \mapsto inv(r)$\\
+\texttt{ shortcut, sc}\ternaryonly & $ r \mapsto sc(r)$\\
+\texttt{ shortcuti, sci}\ternaryonly & $ r \mapsto inv(sc(r))$\\[1ex]
 \hline
-\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bf calculi-theoretic:}}}\\ \hline
-{\tt closure} & $ r_1 r_2 \ldots r_n \mapsto Cl(r_1,r_2,\ldots, r_n)$\newline
+\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bfseries calculi-theoretic:}}}\\ \hline
+\texttt{ closure} & $ r_1 r_2 \ldots r_n \mapsto Cl(r_1,r_2,\ldots, r_n)$\newline
 $Cl$ denotes the minimal set of relations that is closed under composition, converse,
 and intersection\\
-{\tt base-closure} & $Cl(br_1,br_2,\ldots , br_n)$\newline
+\texttt{ base-closure} & $Cl(br_1,br_2,\ldots , br_n)$\newline
 Computes closure of the set of base relations\\
 \hline
-\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bf set-theoretic:}}}\\ \hline
-{\tt complement, cmpl} & $ r \mapsto r^C$\\
-{\tt minus} & $ r s \mapsto r \backslash s$\\
-{\tt union} & $ r s \mapsto r \cup s$\\
-{\tt intersection, isec} & $ r s \mapsto r \cap s$\\
+\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bfseries set-theoretic:}}}\\ \hline
+\texttt{ complement, cmpl} & $ r \mapsto r^C$\\
+\texttt{ minus} & $ r s \mapsto r \backslash s$\\
+\texttt{ union} & $ r s \mapsto r \cup s$\\
+\texttt{ intersection, isec} & $ r s \mapsto r \cap s$\\
 \hline
 \end{longtable}
-For complex operations a Lisp-style prefix syntax can be used, i.e., nested expression enclosed by parantheses, e.g., {\tt (composition rel1 (inverse (homing rel2)))} computes rel1$\circ$ inv(hom(rel2))
+For complex operations a Lisp-style prefix syntax can be used, i.e., nested expression enclosed by parantheses, e.g., \texttt{ (composition rel1 (inverse (homing rel2)))} computes rel1$\circ$ inv(hom(rel2))
 
-\section*{\tt analyze-calculus c op}
+\section*{\texttt{ analyze-calculus c op}}
 Determines relation-algebraic properties
 \begin{description}
-	\item[{\tt c}] calculus
-	\item[{\tt op}] operation:
+	\item[\texttt{ c}] calculus
+	\item[\texttt{ op}] operation:
 	\begin{longtable}{|lp{6cm}|}
 	\hline
-{\tt analyze-calculus c test-algebra} &  checks which axioms are met by the algebraic structure of the calculus\\
-{\tt analyze-calculus c test-property prop} &  checks whether axiom {\tt prop} is satisfied by the calculus\\
+\texttt{ analyze-calculus c test-algebra} &  checks which axioms are met by the algebraic structure of the calculus\\
+\texttt{ analyze-calculus c test-property prop} &  checks whether axiom \texttt{ prop} is satisfied by the calculus\\
 \hline
 \end{longtable}
 \end{description}
 
-\section*{\tt qualify c opt scene}
+\section*{\texttt{ qualify c opt scene}}
 Determines qualitative configuration from quantitative scene description.
 	\begin{description}
-		\item[{\tt c}] calculus
-		\item[{\tt opt}] either {\tt first2all} or {\tt all}, sets which objects to relate
-		\item[{\tt scene}] list of lists containing objects id and coordinates, e.g. {\tt ((Point-A 12.2 34.8) (Point-B -2.3 28.8))}
+		\item[\texttt{ c}] calculus
+		\item[\texttt{ opt}] either \texttt{ first2all} or \texttt{ all}, sets which objects to relate
+		\item[\texttt{ scene}] list of lists containing objects id and coordinates, e.g. \texttt{ ((Point-A 12.2 34.8) (Point-B -2.3 28.8))}
 	\end{description}
 
-\section*{\tt constraint-reasoning c op conf1 [conf2]}
+\section*{\texttt{ constraint-reasoning c op conf1 [conf2]}}
 
-Performs operation {\tt op} on qualitative configuration with respect to calculus {\tt c}:
+Performs operation \texttt{ op} on qualitative configuration with respect to calculus \texttt{ c}:
 \begin{longtable}{|p{4.5cm}|p{9cm}|}
 \hline
-\multicolumn{2}{|l|}{\bf consistency checking:}\\ \hline
-{\tt algebraic-closure}, {\tt a-closure}, {\tt path-consistency}  & Enforces path-consistency --- since this is a purely syntactical operation on the
+\multicolumn{2}{|l|}{\bfseries consistency checking:}\\ \hline
+\texttt{ algebraic-closure}, \texttt{ a-closure}, \texttt{ path-consistency}  & Enforces path-consistency --- since this is a purely syntactical operation on the
 					level of qualitative relations the term ``algebraic closure'' is more adequate.
 					However, since ``path-consistency'' is widely used in this meaning, this name is
 					supported too.\\
-{\tt scenario-consistency} & Computes consistent networks containing base-relations only\\[0,5ex]
-{\tt ternary-closure} & Computes algebraically closed networks using ternary composition with ternary calculi\\[1,0ex]
+\texttt{ scenario-consistency} & Computes consistent networks containing base-relations only\\[0,5ex]
+\texttt{ ternary-closure} & Computes algebraically closed networks using ternary composition with ternary calculi\\[1,0ex]
 \hline
-\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bf manipulating constraint networks:}}}\\ \hline
-{\tt refine} & Merges two networks by intersecting corresponding constraints\\
-{\tt extend} & Merges two networks by uniting corresponding constraints\\
-{\tt update} & Merges two networks by overwriting corresponding constraints\\ \hline
+\multicolumn{2}{|l|}{\raisebox{-2ex}[2ex][2.5ex]{{\bfseries manipulating constraint networks:}}}\\ \hline
+\texttt{ refine} & Merges two networks by intersecting corresponding constraints\\
+\texttt{ extend} & Merges two networks by uniting corresponding constraints\\
+\texttt{ update} & Merges two networks by overwriting corresponding constraints\\ \hline
 \end{longtable}
 
-\section*{\tt a-reasoning c cmd args}
-Algebraic reasoning commands (see Sec.~\ref{sec:a-reasoning} starting on page \pageref{sec:a-reasoning}), {\tt c} designates calculus to use, command {\tt cmd} and arguments are {\tt args}:
+\section*{\texttt{ a-reasoning c cmd args}}
+Algebraic reasoning commands (see Sec.~\ref{sec:a-reasoning} starting on page \pageref{sec:a-reasoning}), \texttt{ c} designates calculus to use, command \texttt{ cmd} and arguments are \texttt{ args}:
 
 \begin{longtable}{|l|l|p{68mm}|}
 \hline
-{\bf command} & {\bf arguments} & {\bf decription}\\ \hline
-{\tt consistency} & constraint-nework & tests network for satisfiability, answers:
+{\bfseries command} & {\bfseries arguments} & {\bfseries decription}\\ \hline
+\texttt{ consistency} & constraint-nework & tests network for satisfiability, answers:
 \begin{description}
-	\item[{\tt SATISFIABLE.}] network proven to be consistent
-	\item[{\tt NOT SATISFIABLE.}] network proven to be inconsistent
-	\item[{\tt CANNOT DECIDE.}] neither of the above
+	\item[\texttt{SATISFIABLE.}] network proven to be consistent
+	\item[\texttt{NOT SATISFIABLE.}] network proven to be inconsistent
+	\item[\texttt{CANNOT DECIDE.}] neither of the above
 \end{description}
 \\
-{\tt analyze-operation} & operation & Verifies operation table; operation is e.g., {\tt composition}, {\tt converse}, {\tt inverse}, {\tt shortcut}, $\ldots$\\
-{\tt qualify} & scene opt & qualification, arguments as for the qualify model (see above) but based purely on the algebraic specification\\ \hline
+\texttt{ analyze-operation} & operation & Verifies operation table; operation is e.g., \texttt{ composition}, \texttt{ converse}, \texttt{ inverse}, \texttt{ shortcut}, $\ldots$\\
+\texttt{ qualify} & scene opt & qualification, arguments as for the qualify model (see above) but based purely on the algebraic specification\\ \hline
 \end{longtable}
 
-\section*{\tt export c format}
+\section*{\texttt{{export c format}}}
 
-Exports calculus definition of {\tt c} in {\tt format}:
+Exports calculus definition of \texttt{ c} in \texttt{ format}:
 \begin{description}
-	\item[{\tt qat}] XML specification for QAT toolkit
-	\item[{\tt gqr}] specification for GQR constraint reasoner
+	\item[\texttt{qat}] XML specification for QAT toolkit
+	\item[\texttt{gqr}] specification for GQR constraint reasoner
 \end{description}
 
 
@@ -2128,40 +2127,40 @@ Using \engine in the interactive mode (i.e., invoking it with the ``-i'' command
 \pagebreak[4]
 
 \begin{longtable}{|lp{10cm}|}\hline
-	{\bf command} & {\bf description} \\ \hline \hline
-	{\tt quit} & exits \engine{}\\
-	{\tt help} & prints short help message\\
-	{\tt load-calculus CALC} & loads a specified calculus into memory\\
-	{\tt *} & used as calculus specifier in commands, {\tt *} stands for the calculus recently loaded into memory. This avoids overhead of reloading a calculus\\ \hline
+	\bfseries{command} & \bfseries{description} \\ \hline \hline
+	\texttt{quit} & exits \engine{}\\
+	\texttt{help} & prints short help message\\
+	\texttt{load-calculus CALC} & loads a specified calculus into memory\\
+	\texttt{*} & used as calculus specifier in commands, \texttt{ *} stands for the calculus recently loaded into memory. This avoids overhead of reloading a calculus\\ \hline
 \end{longtable}
 
 \section{List of Calculi}
 \renewcommand{\arraystretch}{1.5}
 \begin{center}
 \begin{longtable}{|p{4cm}p{6cm}ll|}\hline
-	{\bf calculus identifier(s)} & {\bf calculus} & {\bf section} & {\bf page}\\ \hline \hline
+	{\bfseries calculus identifier(s)} & {\bfseries calculus} & {\bfseries section} & {\bfseries page}\\ \hline \hline
 %
-	{\tt allen, aia, ia} & Allen's interval algebra \citep{allen83} & \ref{sec:allen} & \pageref{sec:allen} \\
-	{\tt block-algebra, ba} & 2D block algebra \citep{guesgen:89} & \ref{sec:block-algebra} & \pageref{sec:block-algebra}\\
-	{\tt cardir} & Cardinal direction calculus \citep{ligozat98_carddir}  & \ref{sec:carddir} & \pageref{sec:carddir} \\
-	{\tt depcalc, dep} & Dependency calculus \citep{Ragni05_DepCalc} & \ref{sec:depcalc} & \pageref{sec:depcalc} \\
-	{\tt dipole-coarse, dra-24} & Dipole calculus \citep{moratz-renz-wolter-ECAI:00} & \ref{sec:dipole-coarse} & \pageref{sec:dipole-coarse} \\
-	{\tt double-cross, dcc} & Double cross calculus \citep{cosyfre92} using the original tuple naming scheme & \ref{sec:double-cross} & \pageref{sec:double-cross} \\
-	{\tt alternative-double- cross, adcc} & Double cross calculus \citep{cosyfre92} using the alternative single number naming scheme & \ref{sec:double-cross} & \pageref{sec:double-cross} \\
-	{\tt flipflop, ffc, ff} & FlipFlop calculus \citep{Ligozat93_FlipFlopCalculus}& \ref{sec:flip-flop} & \pageref{sec:flip-flop} \\
-	{\tt geomori, ori, align} & Geometric Orientation calculus & \ref{sec:geomoricalc} & \pageref{sec:geomoricalc} \\
-	{\tt point-calculus, pc, point-algebra, pa} & Point algebra \citep{vilain_kautz_beek_89_constraint} & \ref{sec:pointcalc} & \pageref{sec:pointcalc} \\
-	{\tt rcc-5} & Region connection calculus (RCC-5) \citep{randell92_rccb} & \ref{sec:rcc5} & \pageref{sec:rcc5} \\
-	{\tt rcc-8} & Region connection calculus (RCC-8) \citep{randell92_rccb} & \ref{sec:rcc8} & \pageref{sec:rcc8} \\
-	{\tt reldistcalculus} & Exemplary calculus from this manual & \ref{sec:calculus-spec} & \pageref{sec:calculus-spec}\\
-	{\tt single-cross, scc} & Single cross calculus \citep{cosyfre92} & \ref{sec:single-cross} & \pageref{sec:single-cross} \\
-	{\tt opra-} & Oriented point reasoning algebra (\opra{})\citep{moratz06_opra} & \ref{sec:opra} & \pageref{sec:opra}\\
-	{\tt qtc-b11} & Qualitative trajectory calculus in 1D with distance \citep{Weghe04_PhD} & \ref{sec:qtc-b11} & \pageref{sec:qtc-b11}\\
-	{\tt qtc-b12} & Qualitative trajectory calculus in 1D with velocity \citep{Weghe04_PhD} & \ref{sec:qtc-b12} & \pageref{sec:qtc-b12}\\
-	{\tt qtc-b21} & Qualitative trajectory calculus in 2D with distance \citep{Weghe04_PhD} & \ref{sec:qtc-b21} & \pageref{sec:qtc-b21}\\
-	{\tt qtc-b22} & Qualitative trajectory calculus in 2D with distance and velocity \citep{Weghe04_PhD} & \ref{sec:qtc-b22} & \pageref{sec:qtc-b22}\\
-	{\tt qtc-c21} & Qualitative trajectory calculus in 2D with distance and side \citep{Weghe04_PhD} & \ref{sec:qtc-c21} & \pageref{sec:qtc-c21}\\
-	{\tt qtc-c22} & Qualitative trajectory calculus in 2D with distance, side, and velocity \citep{Weghe04_PhD} & \ref{sec:qtc-c22} & \pageref{sec:qtc-c22}\\
+	\texttt{ allen, aia, ia} & Allen's interval algebra \citep{allen83} & \ref{sec:allen} & \pageref{sec:allen} \\
+	\texttt{ block-algebra, ba} & 2D block algebra \citep{guesgen:89} & \ref{sec:block-algebra} & \pageref{sec:block-algebra}\\
+	\texttt{ cardir} & Cardinal direction calculus \citep{ligozat98_carddir}  & \ref{sec:carddir} & \pageref{sec:carddir} \\
+	\texttt{ depcalc, dep} & Dependency calculus \citep{Ragni05_DepCalc} & \ref{sec:depcalc} & \pageref{sec:depcalc} \\
+	\texttt{ dipole-coarse, dra-24} & Dipole calculus \citep{moratz-renz-wolter-ECAI:00} & \ref{sec:dipole-coarse} & \pageref{sec:dipole-coarse} \\
+	\texttt{ double-cross, dcc} & Double cross calculus \citep{cosyfre92} using the original tuple naming scheme & \ref{sec:double-cross} & \pageref{sec:double-cross} \\
+	\texttt{ alternative-double- cross, adcc} & Double cross calculus \citep{cosyfre92} using the alternative single number naming scheme & \ref{sec:double-cross} & \pageref{sec:double-cross} \\
+	\texttt{ flipflop, ffc, ff} & FlipFlop calculus \citep{Ligozat93_FlipFlopCalculus}& \ref{sec:flip-flop} & \pageref{sec:flip-flop} \\
+	\texttt{ geomori, ori, align} & Geometric Orientation calculus & \ref{sec:geomoricalc} & \pageref{sec:geomoricalc} \\
+	\texttt{ point-calculus, pc, point-algebra, pa} & Point algebra \citep{vilain_kautz_beek_89_constraint} & \ref{sec:pointcalc} & \pageref{sec:pointcalc} \\
+	\texttt{ rcc-5} & Region connection calculus (RCC-5) \citep{randell92_rccb} & \ref{sec:rcc5} & \pageref{sec:rcc5} \\
+	\texttt{ rcc-8} & Region connection calculus (RCC-8) \citep{randell92_rccb} & \ref{sec:rcc8} & \pageref{sec:rcc8} \\
+	\texttt{ reldistcalculus} & Exemplary calculus from this manual & \ref{sec:calculus-spec} & \pageref{sec:calculus-spec}\\
+	\texttt{ single-cross, scc} & Single cross calculus \citep{cosyfre92} & \ref{sec:single-cross} & \pageref{sec:single-cross} \\
+	\texttt{ opra-} & Oriented point reasoning algebra (\opra{})\citep{moratz06_opra} & \ref{sec:opra} & \pageref{sec:opra}\\
+	\texttt{ qtc-b11} & Qualitative trajectory calculus in 1D with distance \citep{Weghe04_PhD} & \ref{sec:qtc-b11} & \pageref{sec:qtc-b11}\\
+	\texttt{ qtc-b12} & Qualitative trajectory calculus in 1D with velocity \citep{Weghe04_PhD} & \ref{sec:qtc-b12} & \pageref{sec:qtc-b12}\\
+	\texttt{ qtc-b21} & Qualitative trajectory calculus in 2D with distance \citep{Weghe04_PhD} & \ref{sec:qtc-b21} & \pageref{sec:qtc-b21}\\
+	\texttt{ qtc-b22} & Qualitative trajectory calculus in 2D with distance and velocity \citep{Weghe04_PhD} & \ref{sec:qtc-b22} & \pageref{sec:qtc-b22}\\
+	\texttt{ qtc-c21} & Qualitative trajectory calculus in 2D with distance and side \citep{Weghe04_PhD} & \ref{sec:qtc-c21} & \pageref{sec:qtc-c21}\\
+	\texttt{ qtc-c22} & Qualitative trajectory calculus in 2D with distance, side, and velocity \citep{Weghe04_PhD} & \ref{sec:qtc-c22} & \pageref{sec:qtc-c22}\\
 	\hline
 \end{longtable}
 \end{center}

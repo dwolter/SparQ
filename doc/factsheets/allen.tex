@@ -15,7 +15,7 @@
 
 Allen's interval algebra (IA) \citep{allen83} relates pairs of time intervals.
 Time interval $x$ is represented as a tuple of a starting point $x_s$ and
-end point $x_e$ with $x_s<x_e$ using real numbers, e.g., {\tt (life-of-Bach 1685 1750)}.
+end point $x_e$ with $x_s<x_e$ using real numbers, e.g., {\ttfamily (life-of-Bach 1685 1750)}.
 % (cf. Tab.~\ref{fig:allen}):
 %\textbf{b}efore, \textbf{m}eets, \textbf{o}verlaps, \textbf{s}tarts, \textbf{d}uring, \textbf{f}inishes, \textbf{b}efore  \textbf{i}nverse, \textbf{m}eets \textbf{i}nverse, \textbf{o}verlaps \textbf{i}nverse, \textbf{s}tarts \textbf{i}nverse, \textbf{d}uring \textbf{i}nverse, \textbf{f}inishes \textbf{i}nverse, \textbf{eq}uals.
 Altogether 13 base relations are distinguished by comparing the start
@@ -27,20 +27,20 @@ and end points of the intervals.
 \begin{center}
 \begin{tabular}{|ll@{\hspace{12mm}}c@{\hspace{12mm}}l|}
 \hline
-{\bf relation} & {\bf term} & {\bf example} & {\bf definition} \\ \hline
-{\tt b}  & $x$ before $y$ & xxx~~~~~~~~~& $x_{e}<y_{s}$\\
-{\tt bi} & $y$ after $x$    & ~~~~~~~~~yyy& \\ \hline
-{\tt m} & $x$ meets $y$  & xxxx~~~~~~~& $x_{e}=y_{s}$\\
-{\tt mi}& $y$ met-by $x$& ~~~~~~~yyyy& \\ \hline
-{\tt o} & $x$ overlaps $y$& xxxxx~~~& $x_{s}<y_{s}<x_{e}\wedge$\\
-{\tt oi} & $y$ overlapped-by $x$ & ~~~yyyyy& $x_{e}<y_{e}$\\ \hline
-{\tt d} & $x$ during $y$& xxx& $x_{s}>y_{s}\wedge$\\
-{\tt di} & $y$ includes $x$ & yyyyyyy& $x_{e}<y_{e}$\\ \hline
-{\tt s} & $x$ starts $y$ & xxx\hfill~& $x_{s}=y_{s}\wedge$\\
-{\tt si} & $y$ started-by $x$ & yyyyyyy\hfill~& $x_{e}<y_{e}$\\ \hline
-{\tt f} & $x$ finishes $y$ & \hfill xxx& $x_{e}=y_{e}\wedge$\\
-{\tt fi} & $y$ finished-by $x$ & \hfill yyyyyyy& $x_{s}>y_{s}$\\ \hline
-{\tt eq} & $x$ equals $y$ & xxxxxxx& $x_{s}=y_{s}\wedge$\\
+{\bfseries relation} & {\bfseries term} & {\bfseries example} & {\bfseries definition} \\ \hline
+{\texttt b}  & $x$ before $y$ & xxx~~~~~~~~~& $x_{e}<y_{s}$\\
+{\texttt bi} & $y$ after $x$    & ~~~~~~~~~yyy& \\ \hline
+{\texttt m} & $x$ meets $y$  & xxxx~~~~~~~& $x_{e}=y_{s}$\\
+{\texttt mi}& $y$ met-by $x$& ~~~~~~~yyyy& \\ \hline
+{\texttt o} & $x$ overlaps $y$& xxxxx~~~& $x_{s}<y_{s}<x_{e}\wedge$\\
+{\texttt oi} & $y$ overlapped-by $x$ & ~~~yyyyy& $x_{e}<y_{e}$\\ \hline
+{\texttt d} & $x$ during $y$& xxx& $x_{s}>y_{s}\wedge$\\
+{\texttt di} & $y$ includes $x$ & yyyyyyy& $x_{e}<y_{e}$\\ \hline
+{\texttt s} & $x$ starts $y$ & xxx\hfill~& $x_{s}=y_{s}\wedge$\\
+{\texttt si} & $y$ started-by $x$ & yyyyyyy\hfill~& $x_{e}<y_{e}$\\ \hline
+{\texttt f} & $x$ finishes $y$ & \hfill xxx& $x_{e}=y_{e}\wedge$\\
+{\texttt fi} & $y$ finished-by $x$ & \hfill yyyyyyy& $x_{s}>y_{s}$\\ \hline
+{\texttt eq} & $x$ equals $y$ & xxxxxxx& $x_{s}=y_{s}\wedge$\\
  &  & yyyyyyy& $x_{e}=y_{e}$\\ \hline
 \end{tabular}
 %\caption{The 13 basic Allen relations.}
