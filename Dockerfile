@@ -9,9 +9,11 @@ RUN apt-get update &&\
 WORKDIR /root
 
 # download and unpack common lisp compiler SBCL
-RUN curl http://iweb.dl.sourceforge.net/project/sbcl/sbcl/0.9.10/sbcl-0.9.10-x86-64-linux-binary.tar.bz2 | tar xjf - &&\
- cd sbcl* && GNUMAKE=/usr/bin/make sh install.sh &&\
- cd .. && rm -rf sbcl*
+RUN curl https://ayera.dl.sourceforge.net/project/sbcl/sbcl/0.9.10/sbcl-0.9.10-x86-64-linux-binary.tar.bz2 | tar -xj &&\
+cd sbcl-0.9.10-x86-64-linux &&\
+GNUMAKE=/usr/bin/make sh install.sh &&\
+cd .. &&\
+rm -rf sbcl*
 
 # set sbcl encoding to utf-8
 RUN echo "(setf sb-impl::*default-external-format* :UTF-8)" > ~/.sbclrc
