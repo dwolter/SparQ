@@ -68,7 +68,9 @@
   (silent-value sv))
 
 (defmethod parse-primitive ((type (eql 'filename)) expression &rest dummy)
-  (symbol-name expression))
+  (if (symbolp expression)
+    (symbol-name expression)
+    (cons :FAIL  "no symbol")))
 
 ;; catch-all parser for all Lisp builtin types
 (defmethod parse-primitive (type expr &rest stuff)
