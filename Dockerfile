@@ -9,7 +9,7 @@ RUN apt-get update &&\
 WORKDIR /root
 
 # download and unpack common lisp compiler SBCL
-RUN curl https://ayera.dl.sourceforge.net/project/sbcl/sbcl/0.9.10/sbcl-0.9.10-x86-64-linux-binary.tar.bz2 | tar -xj &&\
+RUN curl -L https://downloads.sourceforge.net/project/sbcl/sbcl/0.9.10/sbcl-0.9.10-x86-64-linux-binary.tar.bz2 | tar -xj &&\
 cd sbcl-0.9.10-x86-64-linux &&\
 GNUMAKE=/usr/bin/make sh install.sh &&\
 cd .. &&\
