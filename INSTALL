@@ -4,11 +4,21 @@ Installing
 SparQ is currently not available in binary versions. There are three versions
 of SparQ available:
 
+  * barebones development version (fresh from GitHub, Linux and OX X)
   * pre-bundled source releases (Linux and OS X)
   * Docker containers (Windows, Linux and OS X)
-  * barebones development version (fresh from GitHub)
 
-Installing from a pre-bundled source release 
+Installing from Development Version (GitHub)
+--------------------------------------------
+To install and use SparQ, you need
+
+ * GNU autotools 
+ * LaTeX
+ * all tools listed in section "Installing from a Pre-Bundled Source Release"
+
+In the source directory, run autogen.sh (or: autoreconf -fi) to generate the configure script. Now, continue as described in "Installing from a pre-bundled source release" to build SparQ and documentation.
+
+Installing from a Pre-Bundled Source Release 
 --------------------------------------------
 To install and use SparQ, you need
 
@@ -53,10 +63,3 @@ SparQ can now be started by running
 
   docker run -ti --rm dwolter/sparq
 
-Installing from development version
------------------------------------
-
-Aside the aforementioned tools you will need LaTeX to build the documentation.
-Otherwise there's only one difference to the convenient version: you first need to
-run autogen.sh to generate the configure file. Since you're a developer,
-you knew this anyway...
