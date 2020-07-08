@@ -94,7 +94,7 @@
 		    ((equal r (ofunc:ofuncall encoder relrep "F"))
 		     (push (list s1 '> s2) point-constraints)
 		     (push (list e1 '= e2) point-constraints))
-		    ((equal r (ofunc:ofuncall encoder relrep "F"))
+		    ((equal r (ofunc:ofuncall encoder relrep "FI"))
 		     (push (list s2 '> s1) point-constraints)
 		     (push (list e1 '= e2) point-constraints)))))
 	  ;;(format t "~%point-constraints = ~a " point-constraints)
