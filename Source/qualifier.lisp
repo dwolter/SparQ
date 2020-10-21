@@ -32,7 +32,7 @@
   (declare (ignore entity it)))
 
 (defmethod parse-entity (entity it) ; catchall
-  (throw :parse-error (format nil "cannot parse entity '~a'" entity)))
+  (signal-error "cannot parse entity '~a'" entity))
 
 (defmethod parse-entity ((what (eql :polygon)) it)
   (if (and (consp it)
@@ -47,14 +47,16 @@
       (signal-error "Specification '~a' is not of the required type polygon (identifier (x1 y1) (x2 y2) ... (xn yn))" it)))
 
 (defmethod parse-entity ((what (eql :1d-point)) it)
-  (if (or (nthcdr 2 it)
+  (if (or (not (consp it))
+	  (nthcdr 2 it)
 	  (not (symbolp (car it)))
 	  (not (realp (second it))))
       (signal-error "Specification '~a' is not of the required type 1d point, i.e. (identifier x)~%" it)
       it))
 
 (defmethod parse-entity ((what (eql :2d-point)) it)
-  (if (or (nthcdr 3 it)
+  (if (or (not (consp it))
+	  (nthcdr 3 it)
 	  (not (symbolp (car it)))
 	  (not (realp (second it)))
 	  (not (realp (third it))))
@@ -62,7 +64,8 @@
       it))
 
 (defmethod parse-entity ((what (eql :3d-point)) it)
-  (if (or (nthcdr 4 it)
+  (if (or (not (consp it))
+	  (nthcdr 4 it)
 	  (not (symbolp (car it)))
 	  (not (realp (second it)))
 	  (not (realp (third it))))
@@ -71,7 +74,8 @@
       it)
 
 (defmethod parse-entity ((what (eql :interval)) it)
-  (if (or (nthcdr 3 it)
+  (if (or (not (consp it))
+	  (nthcdr 3 it)
 	  (not (symbolp (car it)))
 	  (not (realp (second it)))
 	  (not (realp (third it))))
@@ -79,7 +83,8 @@
       it))
 
 (defmethod parse-entity ((what (eql :dipole)) it)
-  (if (or (nthcdr 5 it)
+  (if (or (not (consp it))
+	  (nthcdr 5 it)
 	  (not (symbolp (car it)))
 	  (not (realp (second it)))
 	  (not (realp (third it)))
@@ -88,8 +93,20 @@
       (signal-error "Specification '~a' is not of the required type dipole, i.e. (identifier start-x start-y end-x end-y)~%" it)
       it))
 
+(defmethod parse-entity ((what (eql :2d-box)) it)
+  (if (or (not (consp it))
+	  (nthcdr 5 it)
+	  (not (symbolp (car it)))
+	  (not (realp (second it)))
+	  (not (realp (third it)))
+	  (not (realp (fourth it)))
+	  (not (realp (fifth it))))
+      (signal-error "Specification '~a' is not of the required type 2d-box, i.e. (identifier x-min y-min x-max y-max)~%" it)
+      it))
+
 (defmethod parse-entity ((what (eql :disc)) it)
-  (if (or (nthcdr 4 it)
+  (if (or (not (consp it))
+	  (nthcdr 4 it)
 	  (not (symbolp (car it)))
 	  (not (realp (second it)))
 	  (not (realp (third it)))
@@ -98,7 +115,8 @@
       it))
 
 (defmethod parse-entity ((what (eql :2d-oriented-point)) it)
-  (if (or (nthcdr 5 it)
+  (if (or (not (consp it))
+	  (nthcdr 5 it)
 	  (not (symbolp (car it)))
 	  (not (realp (second it)))
 	  (not (realp (third it)))
@@ -114,19 +132,19 @@
 	    :initarg :objects)))
 
 (defmethod parse-primitive ((s (eql 'scene)) expr &key calculus)
-  (let ((b (calculi:calculus-basis-entity calculus))
-	(objs ())
-	(doubles ())
-	(expr (read-from-string (format nil "~a" expr))))
+  (let ((b       (calculi:calculus-basis-entity calculus))  ; entity type of calculus, e.g., 2d-point, interval
+	(objs    ()) ; list of objects in scene
+	(doubles ()) ; list of objects defined twice: signal error if any
+	(expr    (read-from-string (format nil "~a" expr)))) ; scene description
     (if (null b)
 	(cons :FAIL (format nil "no basis entities defined for calculus ~a" calculus))
 	(if (listp expr)
 	    (let ((err (catch 'error (progn (mapc #'(lambda (x) 
-                                                (parse-entity b x)
-                                                (let ((o (first x)))
-                                                  (if (find x objs)
-						      (pushnew x doubles)
-						      (push x objs))))
+						      (parse-entity b x)   ; check that entity "x" is formatted as expected for type "b"
+						      (let ((o (first x))) ; name of entity is always first in list
+							(if (find o objs :key #'first)
+							    (pushnew x doubles)
+							    (push x objs))))
 						  expr)
 					    (when doubles
 					      (signal-error "Scene specification contains multiple definitions of object~P '~a'~{, '~a'~}" (length doubles) (first doubles) (rest doubles)))
