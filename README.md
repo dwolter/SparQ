@@ -13,4 +13,4 @@ SparQ runs on many operating systems including Linux, Mac OS, and Windows (via D
 For further information and appropriate documentation see the manual
 and have a look at the SparQ website:
 
-https://www.uni-bamberg.de/ai/smart-environments/research/sparq/
+https://www.uni-bamberg.de/ai/sme/research/sparq/
