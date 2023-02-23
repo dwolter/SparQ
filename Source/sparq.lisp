@@ -25,6 +25,7 @@
 
 
 ;; Change history (most recent first):
+;; 2023-02-23 DW   pathname conversion in load/compile was broken
 ;; 2011-03-13 DW   keeping track of interactive mode
 ;; 2010-04-10 DW   added support in make-local-pathname for relative pathnames
 ;; 2008-05-29 DW   added cpu-info
@@ -37,10 +38,9 @@
 
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  #-SPARQDEVEL (declaim (sb-ext:muffle-conditions sb-ext:compiler-note))
-  #-SPARQDEVEL (declaim (sb-ext:muffle-conditions sb-ext:code-deletion-note))
-  (setf *READ-DEFAULT-FLOAT-FORMAT* 'DOUBLE-FLOAT)
-  )
+  #-SPARQDEVEL #+SBCL (declaim (sb-ext:muffle-conditions sb-ext:compiler-note))
+  #-SPARQDEVEL #+SBCL (declaim (sb-ext:muffle-conditions sb-ext:code-deletion-note))
+  (setf *READ-DEFAULT-FLOAT-FORMAT* 'DOUBLE-FLOAT))
 
 (defpackage :sparq
   (:use :common-lisp)
@@ -214,11 +214,11 @@
       (if verbose
 	  (progn
 	    (debug-out 0 "compiling \"~a.~a\" -> \"~a.~a\"~%" (pathname-name source) (pathname-type source) (pathname-name fasl) (pathname-type fasl))
-	    (compile-file source :output-file (make-pathname :directory (list :relative) :name file :type (pathname-type fasl)) :verbose verbose :print *error-output*))
+	    (compile-file source :output-file fasl :verbose verbose :print *error-output*))
 	  (with-output-to-string (dummy)
-	    (locally (declare (sb-ext:muffle-conditions sb-ext:compiler-note style-warning))
+	    #+SBCL(locally (declare (sb-ext:muffle-conditions sb-ext:compiler-note style-warning))
 	      (handler-bind ((style-warning #'muffle-warning))
-		(compile-file source :output-file (make-pathname :directory (list :relative) :name file :type (pathname-type fasl)) :verbose verbose :print dummy))))))
+		(compile-file source :output-file fasl :verbose verbose :print dummy))))))
     (if verbose
 	(progn
 	  (debug-out 0 "\"~a.~a\" ~ashould exist, loading...~%"
@@ -236,28 +236,28 @@
 (defun get-cpu-info ()
   (declare (special *num-processors* *processor-speed*))
   (ignore-errors ;; the code might fail but we don't really care...
-    #+BSD (let* ((sys (with-output-to-string (out)
-			(sb-ext:run-program  "/usr/sbin/sysctl" '("hw.cpufrequency" "hw.ncpu") :if-error-exists :ignore :output out)))
-		 (lbreak (position #\Newline sys)))
+   #+(and BSD SBCL) (let* ((sys (with-output-to-string (out)
+                                  (sb-ext:run-program  "/usr/sbin/sysctl" '("hw.cpufrequency" "hw.ncpu") :if-error-exists :ignore :output out)))
+                           (lbreak (position #\Newline sys)))
 	    
-	    (setq *num-processors* (read-from-string sys nil nil :start (+ lbreak 10))
-		  *processor-speed* (read-from-string sys nil nil :start 17)))
-    #+LINUX (let ((sys (make-string-input-stream (with-output-to-string (out)
-						   (sb-ext:run-program "/bin/cat" '("/proc/cpuinfo") :if-error-exists :ignore :output out))))
-		  (nprocs 0)
-		  (clk 0))
-	      (loop while (listen sys) do
-		   (let* ((line (read-line sys nil nil))
-			  (l (length line)))
-		     (if (and (<= 9 l) ; make sure 'end2' is valid
-			      (string= "processor" line :end2 9))
-			 (incf nprocs)
-			 (if (and (<= 7 l)
-				  (string= "cpu MHz" line :end2 7))
-			     (incf clk (read-from-string line nil nil :start (1+ (position #\: line))))))))
-	      (when (< 0 nprocs)
-		(setq *num-processors* nprocs 
-		      *processor-speed* (round (* 1e6 (/ clk nprocs))))))))
+                      (setq *num-processors* (read-from-string sys nil nil :start (+ lbreak 10))
+                            *processor-speed* (read-from-string sys nil nil :start 17)))
+   #+(and LINUX SBCL) (let ((sys (make-string-input-stream (with-output-to-string (out)
+                                                             (sb-ext:run-program "/bin/cat" '("/proc/cpuinfo") :if-error-exists :ignore :output out))))
+                            (nprocs 0)
+                            (clk 0))
+                        (loop while (listen sys) do
+                          (let* ((line (read-line sys nil nil))
+                                 (l (length line)))
+                            (if (and (<= 9 l) ; make sure 'end2' is valid
+                          (string= "processor" line :end2 9))
+                                (incf nprocs)
+                                (if (and (<= 7 l)
+                                         (string= "cpu MHz" line :end2 7))
+                                    (incf clk (read-from-string line nil nil :start (1+ (position #\: line))))))))
+                        (when (< 0 nprocs)
+                          (setq *num-processors* nprocs 
+                                *processor-speed* (round (* 1e6 (/ clk nprocs))))))))
 
 ;;
 ;; Loader that loads (and compiles, if necessary) all SparQ source files
@@ -276,7 +276,7 @@
 	      (push (cons file error) errors))))
     (when errors
       (format *error-output* "~%~%~%~a ERROR(S) OCCURED DURING COMPILATION/LOADING:" (length errors)) 
-      (format *error-output* "~%Please send this error message and information about the Lisp system in use to qshape@informatik.uni-bremen.de.")
+      (format *error-output* "~%Please send this error message and information about the Lisp system in use to diedrich.wolter@.uni-bamberg.de.")
       (format *error-output* "~%Lisp System: ~a, version: ~a" (lisp-implementation-type) (lisp-implementation-version))     
       (let ((filler "                                                "))
         (dolist (file/error (nreverse errors))
@@ -286,7 +286,7 @@
 ;; 
 ;; Utility function for compiling Sparq as executable binary
 ;; ATTENTION: ONCE CALLED, THE CURRENTLY ACTIVE LISP WILL TERMINATE!!
-;;;
+;;
 #+SBCL (defun make-sparq ()
   (load-sparq)
   (setf *print-pretty* nil)
