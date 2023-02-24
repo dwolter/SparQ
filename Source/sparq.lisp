@@ -25,6 +25,7 @@
 
 
 ;; Change history (most recent first):
+;; 2023-02-24 DW   in report of timing, calls are now grouped
 ;; 2023-02-23 DW   pathname conversion in load/compile was broken
 ;; 2011-03-13 DW   keeping track of interactive mode
 ;; 2010-04-10 DW   added support in make-local-pathname for relative pathnames
@@ -330,24 +331,37 @@
   (declare (optimize (speed 3) (safety 0)))
   (push (cons (get-internal-real-time) tag) *times*))
 
+(defun group-timing (timestamps)
+  "groups list of timestamps (start (timestamp . routine) (timestamp2 . routine2) ...)"
+  (let ((durations (loop with start = (first timestamps)
+                     for (ts . routine) in (rest timestamps)
+                     collect
+                     (prog1
+                       (cons (- ts start) routine)
+                       (setq start ts)))))
+    (loop for routine in (mapcar #'cdr (remove-duplicates durations :test #'equal :key #'cdr)) collect
+      (cons (reduce #'(lambda (sum e)
+                        (if (equal (cdr e) routine)
+                            (+ sum (car e))
+                            sum))
+                    durations
+                    :initial-value 0)
+            routine))))
+
 (defmacro with-timing (stream &body body)
   (let ((result (gensym)))
     `(progn (setf *times* (list (get-internal-real-time)))
-	    (let ((,result (progn ,@body)))
-	      (setq *times* (nreverse *times*))
-	      (let* ((now (pop *times*))
-		     (last-time now))
-		(when *timing*
-		  (format ,stream "~&;; TIME [sec]:")
-		  (mapc #'(lambda (ti)
-			    (format ,stream "~&;; ~5,2f (subtotal ~5,2f) ~a"
-				    (* 1e-3 (- (car ti) last-time))
-				    (* 1e-3 (- (car ti) now))
-				    (cdr ti))
-			    (setq last-time (car ti)))
-			*times*)
-		  (format ,stream "~%;; TOTAL:           ~,2f~%" (* 1e-3 (- last-time now))))
-		,result)))))
+       (let* ((,result (progn ,@body)))
+         (when *timing*
+           (let ((times (group-timing (nreverse *times*))))
+             (loop for (duration . method) in times
+               for total = (caar times) then (+ total duration) 
+               finally (format ,stream "~%;; TOTAL:          ~,2f~%" (* 1e-6 total))
+               do
+               (format ,stream "~&;; ~5,2f (subtotal ~5,2f) ~a"
+                       (* 1e-6 duration)
+                       (* 1e-6 total)
+                       method))))))))
 
 ;; some convenience macros from Paul Graham's book "On Lisp"
 (defmacro with-gensyms (syms &body body)
