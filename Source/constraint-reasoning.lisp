@@ -31,8 +31,8 @@
   (let ((objects (constraint-network-objects constraint-network))
 	(constraints (constraints constraint-network)))
     (report-time "network parse/check")
-    (values-list (prog1 (multiple-value-list (cond ((eq :binary (calculus-arity calculus)) (test-pathconsistency/binary calculus objects constraints))
-						   ((eq :ternary (calculus-arity calculus)) (test-pathconsistency/ternary calculus objects constraints))
+    (values-list (prog1 (multiple-value-list (cond ((eql :binary (calculus-arity calculus)) (test-pathconsistency/binary calculus objects constraints))
+						   ((eql :ternary (calculus-arity calculus)) (test-pathconsistency/ternary calculus objects constraints))
 						   (t (signal-error "Unsupported arity of calculus '~a' ~a; :binary or :ternary are supported.~%" 
 								    (calculus-name calculus)  (calculus-arity calculus)))))
 		   (report-time "output result")))))
@@ -42,8 +42,8 @@
   (let ((objects (constraint-network-objects constraint-network))
 	(constraints (constraints constraint-network)))
     (report-time "network parse/check")
-    (cond ((eq :binary (calculus-arity calculus)) (a-closure-helper calculus constraint-network))
-	  ((eq :ternary (calculus-arity calculus)) (if (calculi:calculus-n-ary-composition calculus)
+    (cond ((eql :binary (calculus-arity calculus)) (a-closure-helper calculus constraint-network))
+	  ((eql :ternary (calculus-arity calculus)) (if (calculi:calculus-n-ary-composition calculus)
 						       (test-ternary-closure calculus objects constraints)
 						       (signal-error "No specification of ternary composition is calculus definition of '~a'" (calculus-name calculus))))
 	  (t (signal-error "Unsupported arity of calculus '~a' ~a; :binary or :ternary are supported.~%" 
@@ -61,10 +61,10 @@
     (sparq:report-time "network parse/check")
     
     (cond
-      ((and (eq :binary (calculus-arity calculus))
+      ((and (eql :binary (calculus-arity calculus))
 	    (calculus-tractable-subsets calculus)) (tset-consistency/binary calculus objects constraints mode))
-      ((eq :binary (calculus-arity calculus)) (test-consistency/binary calculus objects constraints mode))
-      ((eq :ternary (calculus-arity calculus)) (test-consistency/ternary calculus objects constraints mode))
+      ((eql :binary (calculus-arity calculus)) (test-consistency/binary calculus objects constraints mode))
+      ((eql :ternary (calculus-arity calculus)) (test-consistency/ternary calculus objects constraints mode))
       (t (signal-error "Unsupported arity of calculus '~a' ~a; :binary or :ternary are supported.~%" 
 		       (calculus-name calculus)  (calculus-arity calculus))))))
 
@@ -76,8 +76,8 @@
 	(constraints (constraints cn)))
     (report-time "network parse/check")
     (cond 
-      ((eq :binary (calculus-arity calculus)) (test-consistency/binary calculus objects constraints mode))
-      ((eq :ternary (calculus-arity calculus)) (test-ternary-consistency calculus objects constraints mode))
+      ((eql :binary (calculus-arity calculus)) (test-consistency/binary calculus objects constraints mode))
+      ((eql :ternary (calculus-arity calculus)) (test-ternary-consistency calculus objects constraints mode))
       (t (signal-error "Unsupported arity of calculus '~a' ~a; :binary or :ternary are supported.~%" 
 		       (calculus-name calculus)  (calculus-arity calculus))))))
 
@@ -85,17 +85,17 @@
 (defun check-consistency (calculus cn)
   "decides consistency of constraint-network cn"
   (let ((m (calculi:calculus-consistency-method calculus)))
-    (cond ((or (eq m :a-closure)
-	       (eq m :algebraic-closure))
+    (cond ((or (eql m :a-closure)
+	       (eql m :algebraic-closure))
            (algebraic-closure calculus cn))
 	  
-	  ((eq m :n-ary-closure)
+	  ((eql m :n-ary-closure)
 	   (n-ary-closure calculus cn))
 	  
-	  ((eq m :scenario-consistency)
+	  ((eql m :scenario-consistency)
 	   (scenario-consistency calculus :check cn))
 	  
-	  ((eq m :n-ary-scenario-consistency)
+	  ((eql m :n-ary-scenario-consistency)
 	   (n-ary-consistency calculus :check cn))
 	  
 	  (t
@@ -104,17 +104,17 @@
 (defcommand ("constraint-reasoning" (c calculus) "check-consistency/net" (cn constraint-network c))
   "Decides consistency of a given constraint-network"
   (let ((m (calculi:calculus-consistency-method c)))
-    (cond ((or (eq m :a-closure)
-	       (eq m :algebraic-closure))
+    (cond ((or (eql m :a-closure)
+	       (eql m :algebraic-closure))
            (multiple-value-list (algebraic-closure c cn)))
 	  
-	  ((eq m :n-ary-closure)
+	  ((eql m :n-ary-closure)
 	   (n-ary-closure c cn))
 	  
-	  ((eq m :scenario-consistency)
+	  ((eql m :scenario-consistency)
 	   (scenario-consistency c :check cn))
 	  
-	  ((eq m :n-ary-scenario-consistency)
+	  ((eql m :n-ary-scenario-consistency)
 	   (n-ary-consistency c :check cn))
 	  
 	  (t
@@ -233,9 +233,9 @@
     (mapcar #'(lambda (o1)
 		(let ((vec (make-array (list (relations:relation-representation-num-base-relations rel-rep)) :initial-element 0)))
 		  (dolist (c constraints)
-		    (cond ((eq o1 (constraint-object-1 c))
+		    (cond ((eql o1 (constraint-object-1 c))
 			   (incf (aref vec (- (integer-length (constraint-relation c)) 1))))
-			  ((eq o1 (constraint-object-2 c))
+			  ((eql o1 (constraint-object-2 c))
 			   (incf (aref vec (- (integer-length (calculi:converse calculus (constraint-relation c))) 1))))))
 		  (cons o1 vec)))
 	    objects)))
@@ -275,14 +275,14 @@
 
     
     (labels ((relation (v1 v2 constraints)
-	       (if (eq v1 v2)
+	       (if (eql v1 v2)
 		   id
-		   (dolist (c constraints (error "OUCH! KEINEN CONSTRAINT GEFUNDEN!! v1=~w v2=~w  constraints=~w" v1 v2 constraints))
-		     (when (and (eq v1 (constraint-object-1 c))
-				(eq v2 (constraint-object-2 c)))
+		   (dolist (c constraints (error "OUCH! NO CONSTRAINT FOUND!! v1=~w v2=~w  constraints=~w" v1 v2 constraints))
+		     (when (and (eql v1 (constraint-object-1 c))
+				(eql v2 (constraint-object-2 c)))
 		       (return (constraint-relation c)))
-		     (when (and (eq v2 (constraint-object-1 c))
-				(eq v1 (constraint-object-2 c)))
+		     (when (and (eql v2 (constraint-object-1 c))
+				(eql v1 (constraint-object-2 c)))
 		       (return (calculi:converse calculus (constraint-relation c)))))))
 	     (hypotheses< (hy1 hy2)
 	       (let ((h1 (matching-hypotheses-heuristic hy1))
@@ -362,20 +362,20 @@
 	      (let ((new-a (gensym (string-upcase (format nil "~a-" a)))))
 		(sparq:debug-out 2 "Replacing ~a by ~a in query network" a new-a)
 		(setq query-objects (mapcar #'(lambda (x)
-						(if (eq x a)
+						(if (eql x a)
 						    new-a
 						    x))
 					    query-objects))
 		(mapcar #'(lambda (x)
-			    (when (eq (constraint-object-1 x) a)
+			    (when (eql (constraint-object-1 x) a)
 			      (setf (constraint-object-1 x) new-a))
 			    (if (listp (constraint-object-2 x))
 				(setf (constraint-object-2 x) (mapcar #'(lambda (x)
-									  (if (eq x a)
+									  (if (eql x a)
 									      new-a
 									      x))
 								      (constraint-object-2 x)))
-				(if (eq (constraint-object-2 x) a) 
+				(if (eql (constraint-object-2 x) a) 
 				    (setf (constraint-object-2 x) new-a))))
 			query-constraints)))
 	  (intersection query-objects objects))
@@ -415,7 +415,7 @@
 	     
 	     (ternary-callback (constraints) ;; IMPLEMENT TERNARY MATCHING!!
 	       t))
-	(if (eq :binary (calculus-arity calculus)) 
+	(if (eql :binary (calculus-arity calculus)) 
 	    (if (calculus-tractable-subsets calculus)
 		(tset-scenario-consistency/binary calculus all-objects all-constraints #'binary-callback nil)
 		(scenario-consistency/binary calculus all-objects all-constraints #'binary-callback))

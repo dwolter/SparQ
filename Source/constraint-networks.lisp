@@ -41,12 +41,12 @@
   (let ((quote? nil)
         (char #\a)
         (name (make-array 31 :adjustable t :fill-pointer 0 :element-type 'base-char)))
-    (loop until (or (eq char +nothing+) (eq char #\Space)) do
+    (loop until (or (eql char +nothing+) (eql char #\Space)) do
           (setq char (read-char stream nil +nothing+))
-          (if (eq char #\\)
+          (if (eql char #\\)
             (setq quote? t)
             (progn
-              (unless (or (eq char +nothing+) (and (eq char #\Space) (not quote?)))
+              (unless (or (eql char +nothing+) (and (eql char #\Space) (not quote?)))
                 (vector-push-extend char name)
                 (setq char #\a))
               (setq quote? nil))))
@@ -68,12 +68,12 @@
 	(setq constraints-spec (car constraints-spec))
 	(setq constraints-spec (read *standard-input* nil +nothing+))))
   ;; Now, check the constraints read, construct the CSP data structure, and invoke the reasoner
-  (when (eq constraints-spec +nothing+)
+  (when (eql constraints-spec +nothing+)
     (signal-error "Could not read constraints~%"))
   (unless (listp constraints-spec)
     (signal-error "Wrong constraint format; list of types ( (obj-1 rel-1 obj-2) ...) are required, supplied was: ~a (a ~a)~%" constraints-spec (type-of constraints-spec)))
   (let (objects constraints)
-    (if (eq (calculus-arity calculus) :binary)
+    (if (eql (calculus-arity calculus) :binary)
 	;; Parse binary constraint network
 	(let* ((rel-rep (calculi:calculus-relation-representation calculus))	     
 	       (encoder (relations:relation-representation-encoder rel-rep))
@@ -87,7 +87,7 @@
 	    
 	    (let ((o1 (first c)) ; object #1
 		  (o2 (third c))) ; object #2
-	      (when (eq o1 o2)
+	      (when (eql o1 o2)
 		(signal-error "Syntax error in constraint specification - object is related to itself; the erroneous constraint is ~a." c))
 
 	      ;; mark that we encountered objects o1 and o2, update list of all objects if necessary
@@ -135,9 +135,9 @@
 	    (when (or (not (listp c))
 		      (not (= 4 (length c))))
 	      (signal-error "Syntax error in constraint specification (obj-1 obj-2 rel obj-3): ~a~%" c))
-	    (when (or (eq (first c) (second c))
-		      (eq (first c) (fourth c))
-		      (eq (second c) (fourth c)))
+	    (when (or (eql (first c) (second c))
+		      (eql (first c) (fourth c))
+		      (eql (second c) (fourth c)))
 	      (signal-error "Syntax error in constraint specification - object is related to itself; the erroneous constraint is ~a." c)) ; ###
 	    (pushnew (first c) objects)
 	    (pushnew (second c) objects)
@@ -148,7 +148,7 @@
 		  constraints))
 	  (let ((double-defs (remove-if-not #'(lambda (c1)
 						(some #'(lambda (c2)
-							  (and (not (eq c1 c2))
+							  (and (not (eql c1 c2))
 							       (null (set-difference (cons (constraint-object-2 c1) (constraint-object-1 c1))
 										     (cons (constraint-object-2 c2) (constraint-object-1 c2))))))
 						      constraints))
@@ -168,23 +168,23 @@
 ;; Utility function for constraint network merging
 (defun conflicting-constraints? (arity c1 c2)
   "Retrieves overlapping constraints from two contraint networks"
-  (let ((objects (if (eq arity :ternary)
+  (let ((objects (if (eql arity :ternary)
 		     (union (cons (constraint-object-2 c1) (constraint-object-1 c1))
 			    (cons (constraint-object-2 c2) (constraint-object-1 c2)))
 		     (union (list (constraint-object-1 c1) (constraint-object-2 c1))
 			    (list (constraint-object-1 c2) (constraint-object-2 c2))))))
-    (eq (length objects)
-	(if (eq arity :ternary)
-	    3
-	    2))))
+    (eql (length objects)
+         (if (eql arity :ternary)
+             3
+             2))))
 
 ;; Merging of constraint networks, conflicting constraint definitions
 ;; are resolved according to a merge function that generates a constraint-specific
 ;; decision (choose left/right, unite, ...)
 (defun merge-constraints (merge-function calculus c1 c2)
-  (if (eq :binary (calculi:calculus-arity calculus))
+  (if (eql :binary (calculi:calculus-arity calculus))
       ;; binary constraint
-      (if (eq (constraint-object-1 c1) (constraint-object-1 c2))
+      (if (eql (constraint-object-1 c1) (constraint-object-1 c2))
 	  ;; (A r1 B) /\ (A r2 B)
 	  (make-constraint (constraint-object-1 c1)
 			   (funcall merge-function (constraint-relation c1) (constraint-relation c2))
@@ -199,32 +199,32 @@
 			      (funcall merge-function (constraint-relation c1) (constraint-relation c2))
 			      (constraint-object-2 c1)))
 
-	    ((and (eq (first (constraint-object-1 c1)) (second (constraint-object-1 c2))) ; A,B r1 C & B,A r2 C
-		  (eq (second (constraint-object-1 c1)) (first (constraint-object-1 c2))))
+	    ((and (eql (first (constraint-object-1 c1)) (second (constraint-object-1 c2))) ; A,B r1 C & B,A r2 C
+		  (eql (second (constraint-object-1 c1)) (first (constraint-object-1 c2))))
 	     (make-constraint (constraint-object-1 c1)
 			      (funcall merge-function (constraint-relation c1) (inverse calculus (constraint-relation c2)))
 			      (constraint-object-2 c1)))
 
-	    ((and (eq (first (constraint-object-1 c1)) (constraint-object-2 c2)) ; A,B r1 C & C,B r2 A
-		  (eq (second (constraint-object-1 c1)) (second (constraint-object-1 c2))))
+	    ((and (eql (first (constraint-object-1 c1)) (constraint-object-2 c2)) ; A,B r1 C & C,B r2 A
+		  (eql (second (constraint-object-1 c1)) (second (constraint-object-1 c2))))
 	     (make-constraint (constraint-object-1 c1)
 			      (funcall merge-function (constraint-relation c1) (inverse calculus (shortcut calculus (inverse calculus (constraint-relation c2)))))
 			      (constraint-object-2 c1)))
 
-	    ((and (eq (constraint-object-2 c1) (first (constraint-object-1 c2))) ; A,B r1 C & C,A r2 B
-		  (eq (constraint-object-2 c2) (first (constraint-object-1 c1))))
+	    ((and (eql (constraint-object-2 c1) (first (constraint-object-1 c2))) ; A,B r1 C & C,A r2 B
+		  (eql (constraint-object-2 c2) (first (constraint-object-1 c1))))
 	     (make-constraint (constraint-object-1 c1)
 			      (funcall merge-function (constraint-relation c1) (homing calculus (homing calculus (constraint-relation c2))))
 			      (constraint-object-2 c1)))
 
-	    ((and (eq (constraint-object-2 c1) (first (constraint-object-1 c2))) ; A,B r1 C & A,C r2 B
-		  (eq (constraint-object-2 c2) (second (constraint-object-1 c1))))
+	    ((and (eql (constraint-object-2 c1) (first (constraint-object-1 c2))) ; A,B r1 C & A,C r2 B
+		  (eql (constraint-object-2 c2) (second (constraint-object-1 c1))))
 	     (make-constraint (constraint-object-1 c1)
 			      (funcall merge-function (constraint-relation c1) (shortcut calculus (constraint-relation c2)))
 			      (constraint-object-2 c1)))
 
-	    ((and (eq (second (constraint-object-1 c1)) (first (constraint-object-1 c2))) ; A,B r1 C & B,C r2 A
-		  (eq (constraint-object-2 c1) (second (constraint-object-1 c2))))
+	    ((and (eql (second (constraint-object-1 c1)) (first (constraint-object-1 c2))) ; A,B r1 C & B,C r2 A
+		  (eql (constraint-object-2 c1) (second (constraint-object-1 c2))))
 	     (make-constraint (constraint-object-1 c1)
 			      (funcall merge-function (constraint-relation c1) (homing calculus (constraint-relation c2)))
 			      (constraint-object-2 c1)))
@@ -247,7 +247,7 @@
 
 ;; Prints a constraint network represented as list of constraints
 (defun print-network (calculus stream network)
-  (if (eq (calculi:calculus-arity calculus) :ternary)
+  (if (eql (calculi:calculus-arity calculus) :ternary)
       (dump-ternary-constraint-network stream calculus network)
       (let* ((rel-rep (calculus-relation-representation calculus))
 	     (decoder (relations:relation-representation-decoder rel-rep)))
@@ -383,7 +383,7 @@
 										   :objects objs
 										   :constraints cns
 										   :calculus calculus)))))))
-	((eq 'constraint-network (type-of expression))
+	((eql 'constraint-network (type-of expression))
 	 expression)
 	(t
 	 (cons :FAIL "Constraint networks need to be lists"))))
@@ -397,7 +397,7 @@
   (let ((cns (mapcar #'(lambda (net)
 			 (parse-primitive 'constraint-network net :calculus c))
 		     csps)))
-    (if (every #'(lambda (cn) (eq 'constraint-network (type-of cn))) cns)
+    (if (every #'(lambda (cn) (eql 'constraint-network (type-of cn))) cns)
 	(reduce #'(lambda (accu csp)
 		    (refine-configurations c accu csp))
 		cns

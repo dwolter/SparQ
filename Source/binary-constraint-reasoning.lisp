@@ -989,7 +989,7 @@
 		     ;(format sparq:*sparq-io* "~%DESCENDS = ~a    ASCENDS = ~a~%DECISIONS = ~a~%" descends ascends decisions)
 		     ;(finish-output sparq:*sparq-io*)
 		     (funcall callback objects matrix)
-                     ;(sparq:report-time "refinement search")
+                     (sparq:report-time "refinement search")
 		     (return-from tset-scenario-consistency/binary))
 		   (multiple-value-setq (set i j) (find-splitting-set (calculus-relation-representation calculus) n matrix)))
 		 ;;(when (and sparq:*debug* set)                 
@@ -1026,8 +1026,8 @@
                                (restore-matrix matrix backup)))))))
                    ;; We have found a solution
                    (when (funcall callback objects matrix)
-                     ;(sparq:report-time "refinement search")
-                     (format t "~%DESCENDS = ~a    ASCENDS = ~a~% DECISIONS" descends ascends decisions)
+                     (sparq:report-time "refinement search")
+                     ;(format t "~%DESCENDS = ~a    ASCENDS = ~a~% DECISIONS" descends ascends decisions)
                      (return-from tset-scenario-consistency/binary))))))
       
       ;; When enforcing pathconsistency start with applying pathconsistency
