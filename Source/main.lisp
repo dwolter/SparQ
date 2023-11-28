@@ -14,6 +14,7 @@
 ;;; 
 
 ;; Change history (most recent first):
+;; 2023-11-28 DW   fixed recognizing and handling terminal output
 ;; 2011-11-09 DW   new batch mode added
 ;; 2010-04-20 DW   migrating to new command architecture
 ;; 2010-02-08 JOW  included neighborhood-reasoning support
@@ -292,7 +293,8 @@
   (setf *debugger-hook* #'sparq-quit
 	*random-state* (make-random-state t))
   (get-cpu-info)
-  (cond ((string= (sb-ext:posix-getenv "TERM") "xterm-color")
+  (cond ((and (string= (sb-ext:posix-getenv "TERM") "xterm" :start1 0 :end1 5)
+	      (string= (sb-ext:posix-getenv "TERM") "color" :start1 (- (length (sb-ext:posix-getenv "TERM")) 5)))
 	 (setf *print-mode* :xterm-color))
 	((string= (sb-ext:posix-getenv "TERM") "xterm")
 	 (setf *print-mode* :xterm)))
@@ -417,14 +419,10 @@
 				((or (sfind "-h" args)
 				     (sfind "--help" args)
 				     (null args))
-				 (when (string= (sb-ext:posix-getenv "TERM") "xterm-color")
-				   (setf *print-mode* :xterm-color))
 				 (print-usage))
 				
 				(t (calculi:load-calculus-registry)
 				   (sparq:register-extensions)
-				   (when (string= (sb-ext:posix-getenv "TERM") "xterm-color")
-				     (setf *print-mode* :xterm-color))
 				   (sparq-single-computation (member-if-not #'(lambda (arg) (char= #\- (char arg 0))) args))))
 			  nil)))
 	    (when error

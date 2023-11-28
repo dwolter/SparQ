@@ -162,7 +162,7 @@
   "generates appropriate format string for terminal type"
   (let ((str (with-output-to-string (tmp)
 	       (apply #'format (cons tmp (cons ctlr args)))))
-	(format-coder (if (eq *print-mode* :xterm-color)
+	(format-coder (if (eql *print-mode* :xterm-color)
 			  #'xterm-formatter
 			  #'plaintext-formatter)))
     ;; String nach Steuerzeichen durchfloehen
@@ -355,13 +355,14 @@
          (when *timing*
            (let ((times (group-timing (nreverse *times*))))
              (loop for (duration . method) in times
-               for total = (caar times) then (+ total duration) 
-               finally (format ,stream "~%;; TOTAL:          ~,2f~%" (* 1e-6 total))
-               do
-               (format ,stream "~&;; ~5,2f (subtotal ~5,2f) ~a"
-                       (* 1e-6 duration)
-                       (* 1e-6 total)
-                       method))))))))
+		for total = (caar times) then (+ total duration) 
+		finally (format ,stream "~%;; TOTAL:          ~,2f~%" (* 1e-6 (or total 0)))
+		do
+		  (format ,stream "~&;; ~5,2f (subtotal ~5,2f) ~a"
+			  (* 1e-6 duration)
+			  (* 1e-6 total)
+			  method))))
+	 ,result))))
 
 ;; some convenience macros from Paul Graham's book "On Lisp"
 (defmacro with-gensyms (syms &body body)
